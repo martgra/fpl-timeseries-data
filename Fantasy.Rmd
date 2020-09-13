@@ -1,0 +1,155 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .Rmd
+      format_name: rmarkdown
+      format_version: '1.2'
+      jupytext_version: 1.6.0
+  kernelspec:
+    display_name: Python 3
+    language: python
+    name: python3
+---
+
+<!-- #region -->
+# Fantasy Premier League 2020/2021 
+Basert på følgende tutorial:  
+https://towardsdatascience.com/fantasy-premier-league-value-analysis-python-tutorial-using-the-fpl-api-8031edfe9910
+
+
+## Oppsett
+
+Vi importerer nødvendige biblioteker   
+* requests for å laste ned datasettet - https://requests.readthedocs.io/en/master/
+* pandas for å behandle data - https://pandas.pydata.org/docs/
+* numpy for å behandle data - https://numpy.org/doc/stable/
+
+
+Datasettet fra Fantasy finnes på følgende link.  
+https://fantasy.premierleague.com/api/bootstrap-static/   
+
+#### API - andre nyttige metoder
+* Kampprogram: https://fantasy.premierleague.com/api/fixtures/
+* Et lags historie: https://fantasy.premierleague.com/api/entry/{}/history/
+* Et bestemt lags score i år: https://fantasy.premierleague.com/api/entry/{team-id}/
+* Score i en bestemt "classic"-liga: https://fantasy.premierleague.com/api/leagues-classic/{league-id}/standings/
+* Score i bestemt "H2H"-liga: https://fantasy.premierleague.com/api/leagues-h2h/{league-id}/standings/
+* Siste transfers: https://fantasy.premierleague.com/api/entry/{team-id}/transfers-latest/
+* My Team https://fantasy.premierleague.com/api/my-team/{team-id}/ *
+
+*For å bruke "my team api" er autentikasjon påkrevd se link  
+https://medium.com/@bram.vanherle1/fantasy-premier-league-api-authentication-guide-2f7aeb2382e4)
+
+#### Andre nyttige lenker
+* Reddit-tråd om FPL API  
+https://www.reddit.com/r/FantasyPL/comments/c64rrx/fpl_api_url_has_been_changed/
+* Blogpost om FPL API (her må man bytte ut drf med api)  
+https://medium.com/@YourMumSaysWhat/how-to-get-data-from-the-fantasy-premier-league-api-4477d6a334c3
+* Historiske data for FPL  
+https://github.com/vaastav/Fantasy-Premier-League
+<!-- #endregion -->
+
+```{python}
+# Nødvendige importer og setup for å komme i gang. 
+
+import requests
+import pandas as pd
+import numpy as np
+import json
+import os
+from datetime import datetime
+from IPython.display import display
+
+pd.set_option('display.max_columns', 100)
+
+```
+
+```{python}
+
+```
+
+### Datasettet lastes ned
+
+Dette endrer seg og det vil være nødvendig å laste ned ganske ofte. Her må hver enkelt finne ut hvordan man ønsker å bruke, og kombinere data. 
+
+```{python}
+# Laster ned datasett som json
+
+url = 'https://fantasy.premierleague.com/api/bootstrap-static/'
+
+# Hvis data for i dag finnes; åpne ellers last ned.
+if os.path.isfile("{}_fpl_datadump.json".format(datetime.today().date())):
+    with open("{}_fpl_datadump.json".format(datetime.today().date())) as json_file:
+        fpl_json = json.load(json_file)
+else:
+    fpl_json = requests.get(url).json() 
+    fpl_json["download_time"]= str(datetime.now())
+    # dump dataset to local host
+    with open("{}_fpl_datadump.json".format(datetime.today().date()), "w") as f:
+        json.dump(fpl_json, f, indent=4)
+
+keys = fpl_json.keys()
+```
+
+## Entiteter i datasettet
+
+Dette er et ganske stort datasett,men det er to tydelige interessante objekter;
+* elements - som i praksis er spillere
+* teams - som inneholder informasjon om lagene
+* events - inneholder noe data splittet på gameweek
+
+
+```{python}
+# Printer nøkler for datasett
+for key in keys:
+    print(key)
+```
+
+```{python}
+# Laster inn ønsket data i frames
+teams_df = pd.DataFrame(fpl_json["teams"])
+elements_df = pd.DataFrame(fpl_json["elements"])
+events_df = pd.DataFrame(fpl_json["events"])
+
+```
+
+### Teams
+Vi visualiserer noen rader av data om lagene og viser alle tilgjengelige nøkler
+
+```{python}
+# Vis data
+display(teams_df.head(3))
+# Vis tilgjengelige kolonner
+display(teams_df.columns.tolist())
+```
+
+```{python}
+# Noe hacking av rekkefølge av index for å få ønskede verdier først
+_elements_columns = elements_df.columns.tolist()
+_elements_columns.insert(0, _elements_columns.pop(_elements_columns.index("team")))
+_elements_columns.insert(0, _elements_columns.pop(_elements_columns.index("first_name")))
+_elements_columns.insert(0, _elements_columns.pop(_elements_columns.index("second_name")))
+elements_df = elements_df[_elements_columns]
+# Vis 5 første linjer
+display(elements_df.head(5))
+
+# Vis tilgjengelige kolonner
+display(sorted(_elements_columns))
+
+```
+
+```{python}
+
+```
+
+```{python}
+# Vis 5 første datalinjer
+display(events_df[["deadline_time", "finished", "data_checked", "most_transferred_in", "most_captained", "is_next"]].head(5))
+# Vis tilgjengelige kolonner
+display(events_df.columns.tolist())
+```
+
+```{python}
+
+```
