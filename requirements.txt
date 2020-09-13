@@ -1,2 +1,7 @@
 azure-storage-blob
 python-dotenv
+notebook
+jupytext
+pandas
+numpy
+requests

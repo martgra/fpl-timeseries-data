@@ -157,3 +157,4 @@ if __name__ == "__main__":
 
     # Creates connection to storage account
     storage = Azure_storage(os.getenv('AZURE_STORAGE_CONNECTION_STRING'), "fplstats")
+    storage.download_blobs("data")
