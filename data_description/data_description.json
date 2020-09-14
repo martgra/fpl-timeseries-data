@@ -1,0 +1,473 @@
+{
+    "elements": {
+        "assists": {
+            "change": "GW",
+            "description": "Number of assists in current GW",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "bonus": {
+            "change": "GW",
+            "description": "Bonus points awarded",
+            "notes": "Given based on 'bsp'",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "bps": {
+            "change": "GW",
+            "description": "Bonus point score",
+            "notes": "The score/rating/rank awarded in a match to calculate awarded 'bonus'",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "chance_of_playing_next_round": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "chance_of_playing_this_round": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "clean_sheets": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "code": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "corners_and_indirect_freekicks_order": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "corners_and_indirect_freekicks_text": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "cost_change_event": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "cost_change_event_fall": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "cost_change_start": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "cost_change_start_fall": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "creativity": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "creativity_rank": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "creativity_rank_type": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "direct_freekicks_order": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "direct_freekicks_text": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "dreamteam_count": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "element_type": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "ep_next": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "ep_this": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "event_points": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "first_name": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "form": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "goals_conceded": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "goals_scored": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "ict_index": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "ict_index_rank": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "ict_index_rank_type": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "id": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "in_dreamteam": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "influence": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "influence_rank": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "influence_rank_type": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "minutes": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "news": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "news_added": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "now_cost": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "own_goals": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "penalties_missed": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "penalties_order": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "penalties_saved": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "penalties_text": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "photo": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "points_per_game": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "red_cards": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "saves": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "second_name": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "selected_by_percent": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "special": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "squad_number": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "status": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "team": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "team_code": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "threat": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "threat_rank": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "threat_rank_type": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "total_points": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "transfers_in": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "transfers_in_event": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "transfers_out": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "transfers_out_event": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "value_form": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "value_season": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "web_name": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        },
+        "yellow_cards": {
+            "change": "None",
+            "description": "None",
+            "notes": "None",
+            "data_type": "None",
+            "calculated": "None"
+        }
+    }
+}
