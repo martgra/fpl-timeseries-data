@@ -1,5 +1,5 @@
 {
-    "$schema": "./data_desc_schema.json",
+    "$schema": "./data_description_schema.json",
     "line_endings": "unix",
     "elements": {
         "assists": {
