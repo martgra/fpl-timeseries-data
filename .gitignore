@@ -124,7 +124,7 @@ venv.bak/
 .mypy_cache/
 .dmypy.json
 dmypy.json
-*.ipynb
+notebooks/*.ipynb
 # Pyre type checker
 .pyre/
 data/*
