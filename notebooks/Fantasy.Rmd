@@ -125,17 +125,7 @@ display(teams_df.columns.tolist())
 ```
 
 ```{python}
-# Noe hacking av rekkefølge av index for å få ønskede verdier først
-_elements_columns = elements_df.columns.tolist()
-_elements_columns.insert(0, _elements_columns.pop(_elements_columns.index("team")))
-_elements_columns.insert(0, _elements_columns.pop(_elements_columns.index("first_name")))
-_elements_columns.insert(0, _elements_columns.pop(_elements_columns.index("second_name")))
-elements_df = elements_df[_elements_columns]
-# Vis 5 første linjer
-display(elements_df.head(5))
 
-# Vis tilgjengelige kolonner
-display(sorted(_elements_columns))
 
 ```
 
