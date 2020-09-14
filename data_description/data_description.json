@@ -1,59 +1,69 @@
 {
+    "$schema": "./data_desc_schema.json",
+    "line_endings": "unix",
     "elements": {
         "assists": {
-            "change": "GW",
-            "description": "Number of assists in current GW",
-            "notes": "None",
-            "data_type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Number of assists in total",
+            "notes": "Seems to be the total number of assists",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "bonus": {
-            "change": "GW",
+            "change": "gw",
             "description": "Bonus points awarded",
             "notes": "Given based on 'bsp'",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "bps": {
-            "change": "GW",
+            "change": "gw",
             "description": "Bonus point score",
             "notes": "The score/rating/rank awarded in a match to calculate awarded 'bonus'",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "chance_of_playing_next_round": {
             "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "calculated": "None"
+            "description": "The chance in range 0.0 - 100.00 of a player playing next round",
+            "notes": "Seems to be not to be filled (NaN) if player have no history of not being able to play",
+            "data_type": "float",
+            "type": "None",
+            "calculated": "snapshot"
         },
         "chance_of_playing_this_round": {
             "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "calculated": "None"
+            "description": "The chance in range 0.0 - 100.00 of a player playing this round",
+            "notes": "Seems to be not to be filled (NaN) if player have no history of not being able to play.",
+            "data_type": "float",
+            "type": "None",
+            "calculated": "snapshot"
         },
         "clean_sheets": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "The total number of clean sheets",
             "notes": "None",
-            "data_type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "None",
+            "calculated": "cumulative_sum"
         },
         "code": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "calculated": "None"
+            "change": "season",
+            "description": "Player ID",
+            "notes": "Most probably the player idenfication number",
+            "data_type": "integer",
+            "type": "None",
+            "calculated": "static"
         },
         "corners_and_indirect_freekicks_order": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
+            "change": "gw",
+            "description": "Ranking of order of corners",
+            "notes": "Includes indirect freekicks, but mainly corners",
+            "data_type": "integer",
+            "type": "discrete",
             "calculated": "None"
         },
         "corners_and_indirect_freekicks_text": {
@@ -61,6 +71,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "cost_change_event": {
@@ -68,6 +79,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "cost_change_event_fall": {
@@ -75,6 +87,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "cost_change_start": {
@@ -82,6 +95,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "cost_change_start_fall": {
@@ -89,6 +103,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "creativity": {
@@ -96,6 +111,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "creativity_rank": {
@@ -103,6 +119,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "creativity_rank_type": {
@@ -110,6 +127,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "direct_freekicks_order": {
@@ -117,6 +135,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "direct_freekicks_text": {
@@ -124,6 +143,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "dreamteam_count": {
@@ -131,6 +151,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "element_type": {
@@ -138,6 +159,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "ep_next": {
@@ -145,6 +167,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "ep_this": {
@@ -152,6 +175,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "event_points": {
@@ -159,6 +183,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "first_name": {
@@ -166,6 +191,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "form": {
@@ -173,6 +199,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "goals_conceded": {
@@ -180,6 +207,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "goals_scored": {
@@ -187,6 +215,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "ict_index": {
@@ -194,6 +223,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "ict_index_rank": {
@@ -201,6 +231,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "ict_index_rank_type": {
@@ -208,6 +239,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "id": {
@@ -215,6 +247,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "in_dreamteam": {
@@ -222,6 +255,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "influence": {
@@ -229,6 +263,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "influence_rank": {
@@ -236,6 +271,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "influence_rank_type": {
@@ -243,6 +279,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "minutes": {
@@ -250,6 +287,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "news": {
@@ -257,6 +295,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "news_added": {
@@ -264,6 +303,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "now_cost": {
@@ -271,6 +311,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "own_goals": {
@@ -278,6 +319,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "penalties_missed": {
@@ -285,6 +327,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "penalties_order": {
@@ -292,6 +335,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "penalties_saved": {
@@ -299,6 +343,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "penalties_text": {
@@ -306,6 +351,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "photo": {
@@ -313,6 +359,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "points_per_game": {
@@ -320,6 +367,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "red_cards": {
@@ -327,6 +375,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "saves": {
@@ -334,6 +383,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "second_name": {
@@ -341,6 +391,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "selected_by_percent": {
@@ -348,6 +399,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "special": {
@@ -355,6 +407,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "squad_number": {
@@ -362,6 +415,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "status": {
@@ -369,6 +423,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "team": {
@@ -376,6 +431,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "team_code": {
@@ -383,6 +439,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "threat": {
@@ -390,6 +447,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "threat_rank": {
@@ -397,6 +455,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "threat_rank_type": {
@@ -404,6 +463,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "total_points": {
@@ -411,6 +471,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "transfers_in": {
@@ -418,6 +479,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "transfers_in_event": {
@@ -425,6 +487,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "transfers_out": {
@@ -432,6 +495,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "transfers_out_event": {
@@ -439,6 +503,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "value_form": {
@@ -446,6 +511,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "value_season": {
@@ -453,6 +519,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "web_name": {
@@ -460,6 +527,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         },
         "yellow_cards": {
@@ -467,6 +535,7 @@
             "description": "None",
             "notes": "None",
             "data_type": "None",
+            "type": "None",
             "calculated": "None"
         }
     }

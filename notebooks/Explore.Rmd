@@ -101,7 +101,19 @@ sorted(_elements_columns)
 ```
 
 ```{python}
-elements_df_13.loc[elements_df_13['web_name'] == "Willian"][[ 'clean_sheets']].head(20)
+freekick = elements_df_13.loc[elements_df_13['corners_and_indirect_freekicks_order'].notnull()][[ 'web_name',
+ 'corners_and_indirect_freekicks_order',
+ 'corners_and_indirect_freekicks_text', 'team']]
+freekick
+freekick.loc[freekick["team"] == 7]
+```
+
+```{python}
+elements_df_13.loc[elements_df_13['web_name'] == "Chilwell"][[  'clean_sheets',
+ 'code',
+ 'corners_and_indirect_freekicks_order',
+ 'corners_and_indirect_freekicks_text',
+ 'cost_change_event']].head(100)
 ```
 
 ```{python}
@@ -109,25 +121,15 @@ elements_df_14.loc[elements_df_14['web_name'] == "Willian"][[ 'clean_sheets']].h
 ```
 
 ```{python}
-with open(Path("/home/vagrant/dev/fpl2021/data_description/elements_notes.json")) as json_file:
-        data_dec = json.load(json_file)
+with open(Path("/home/vagrant/dev/fpl2021/data_description/data_description.json")) as json_file:
+        data_desc = json.load(json_file)
+
+for i in data_desc["elements"]:
+    data_desc["elements"][i]["type"="None"]
 ```
 
 ```{python}
-print(data_dec)
-```
-
-```{python}
-for i in dict(data_dec):
-    print(i)
-```
-
-```{python}
-x = {i:{"change": "None", "description": "None", "notes": "None", "data_type": "None", "Calculated": "None"} for i in sorted(_elements_columns)}
-```
-
-```{python}
-print(json.dumps(x, indent=4))
+print(json.dumps(data_desc, indent=4))
 ```
 
 ```{python}
