@@ -1,6 +1,10 @@
 # Fantasy Premier League 2020/2021
 
-### Oppsett
+Basert på følgende tutorial:
+https://towardsdatascience.com/fantasy-premier-league-value-analysis-python-tutorial-using-the-fpl-api-8031edfe9910
+Oppsett
+
+### Getting started
 
 Repoet baserer seg på python3 og jupyter med jupytext for smidig versjonskontroll. 
 
@@ -12,9 +16,7 @@ source venv/bin/activate
 pip install -r requirements
 ```
 
-Basert på følgende tutorial:
-https://towardsdatascience.com/fantasy-premier-league-value-analysis-python-tutorial-using-the-fpl-api-8031edfe9910
-Oppsett
+
 
 ### Datasett
 Datasettet fra Fantasy finnes på følgende link.
