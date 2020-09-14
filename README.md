@@ -1,5 +1,17 @@
 # Fantasy Premier League 2020/2021
 
+### Oppsett
+
+Repoet baserer seg på python3 og jupyter med jupytext for smidig versjonskontroll. 
+
+```bash
+git clone https://github.com/martgra/fpl2021.git
+cd fpl2021
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements
+```
+
 Basert på følgende tutorial:
 https://towardsdatascience.com/fantasy-premier-league-value-analysis-python-tutorial-using-the-fpl-api-8031edfe9910
 Oppsett
