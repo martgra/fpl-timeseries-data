@@ -20,7 +20,7 @@
                 "change": {
                     "description": "When data is updated",
                     "type": "string",
-                    "enum": ["gw", "continuous", "season", "None"]
+                    "enum": ["gw", "continuous", "season", "static","None"]
                 },
                 "description": {
                     "description": "Short description of what the data means",
@@ -33,7 +33,7 @@
                 "data_type": {
                     "description": "Type of the data",
                     "type": "string",
-                    "enum": ["string", "integer", "float", "None"]
+                    "enum": ["string", "integer", "float", "boolean", "None"]
                 },
                 "type": {
                     "description": "What is measured",
@@ -43,7 +43,7 @@
                 "calculated": {
                     "description": "How data is measured",
                     "type": "string",
-                    "enum": ["snapshot", "cumulative_sum", "static", "None"]
+                    "enum": ["snapshot", "cumulative_sum", "static", "rank", "moving average", "None"]
                 }
             }
         }

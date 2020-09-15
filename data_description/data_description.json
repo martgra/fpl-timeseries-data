@@ -5,53 +5,53 @@
         "assists": {
             "change": "gw",
             "description": "Number of assists in total",
-            "notes": "Seems to be the total number of assists",
+            "notes": "The total number of assists during a season, except GW0 where previous season is listed",
             "data_type": "integer",
             "type": "continuous",
             "calculated": "cumulative_sum"
         },
         "bonus": {
             "change": "gw",
-            "description": "Bonus points awarded",
-            "notes": "Given based on 'bsp'",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "description": "Total bonus points awarded",
+            "notes": "Given based on 'bsp' score given in each match",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "bps": {
             "change": "gw",
-            "description": "Bonus point score",
-            "notes": "The score/rating/rank awarded in a match to calculate awarded 'bonus'",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "description": "Total bonus point score",
+            "notes": "The score/rating/rank awarded total in a season, based on score from each gw",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "chance_of_playing_next_round": {
-            "change": "None",
-            "description": "The chance in range 0.0 - 100.00 of a player playing next round",
+            "change": "continuous",
+            "description": "The chance of a player playing next round",
             "notes": "Seems to be not to be filled (NaN) if player have no history of not being able to play",
             "data_type": "float",
-            "type": "None",
+            "type": "discrete",
             "calculated": "snapshot"
         },
         "chance_of_playing_this_round": {
             "change": "None",
             "description": "The chance in range 0.0 - 100.00 of a player playing this round",
             "notes": "Seems to be not to be filled (NaN) if player have no history of not being able to play.",
-            "data_type": "float",
-            "type": "None",
+            "data_type": "integer",
+            "type": "discrete",
             "calculated": "snapshot"
         },
         "clean_sheets": {
             "change": "gw",
             "description": "The total number of clean sheets",
-            "notes": "None",
+            "notes": "How many clean sheets recorded in the course of season",
             "data_type": "integer",
             "type": "None",
             "calculated": "cumulative_sum"
         },
         "code": {
-            "change": "season",
+            "change": "static",
             "description": "Player ID",
             "notes": "Most probably the player idenfication number",
             "data_type": "integer",
@@ -60,11 +60,11 @@
         },
         "corners_and_indirect_freekicks_order": {
             "change": "gw",
-            "description": "Ranking of order of corners",
-            "notes": "Includes indirect freekicks, but mainly corners",
-            "data_type": "integer",
+            "description": "Rank of the cornertakers",
+            "notes": "Should apply to mainly corners - how found is unknown, perhaps number of corners taken during season",
+            "data_type": "float",
             "type": "discrete",
-            "calculated": "None"
+            "calculated": "rank"
         },
         "corners_and_indirect_freekicks_text": {
             "change": "None",
@@ -75,68 +75,68 @@
             "calculated": "None"
         },
         "cost_change_event": {
-            "change": "None",
+            "change": "continuous",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
+            "notes": "Difference between cost_change_event and cost_change_start unknown",
+            "data_type": "integer",
+            "type": "categorical",
             "calculated": "None"
         },
         "cost_change_event_fall": {
-            "change": "None",
+            "change": "continuous",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
+            "notes": "Difference between cost_change_event_fall and cost_change_start_fall unknown",
+            "data_type": "integer",
+            "type": "categorical",
             "calculated": "None"
         },
         "cost_change_start": {
-            "change": "None",
+            "change": "continuous",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
+            "notes": "Difference between cost_change_event and cost_change_start unknown",
+            "data_type": "integer",
+            "type": "categorical",
             "calculated": "None"
         },
         "cost_change_start_fall": {
-            "change": "None",
+            "change": "continuous",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
+            "notes": "Difference between cost_change_event_fall and cost_change_start_fall unknown",
+            "data_type": "integer",
+            "type": "categorical",
             "calculated": "None"
         },
         "creativity": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Total creativity score for season",
+            "notes": "Creativity assesses player performance in terms of producing goalscoring opportunities for others. It can be used as a guide to identify the players most likely to supply assists. While this analyses frequency of passing and crossing, it also considers pitch location and quality of the final ball.",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "creativity_rank": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "The current creativity ranking for the player",
+            "notes": "Rank based on creativity total score for all players in FPL season",
+            "data_type": "integer",
+            "type": "discrete",
+            "calculated": "rank"
         },
         "creativity_rank_type": {
-            "change": "None",
+            "change": "gw",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "notes": "Other score than creativity_rank, difference not understood",
+            "data_type": "integer",
+            "type": "discrete",
+            "calculated": "rank"
         },
         "direct_freekicks_order": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Rank of the direct freekick takers",
+            "notes": "How rank is calculated is unknown, perhaps number of corners taken during season",
+            "data_type": "integer",
+            "type": "discrete",
+            "calculated": "rank"
         },
         "direct_freekicks_text": {
             "change": "None",
@@ -147,116 +147,116 @@
             "calculated": "None"
         },
         "dreamteam_count": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Total time present in dreamteam",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "element_type": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "season",
+            "description": "Player position",
+            "notes": "Could be combined with element types object to get player position in text form",
+            "data_type": "integer",
+            "type": "categorical",
+            "calculated": "static"
         },
         "ep_next": {
-            "change": "None",
+            "change": "gw",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
+            "notes": "Expectance of playing next round. Needs further investigation",
+            "data_type": "float",
+            "type": "discrete",
             "calculated": "None"
         },
         "ep_this": {
-            "change": "None",
+            "change": "gw",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
+            "notes": "Expectance of playing this round. Needs further investigation",
+            "data_type": "float",
+            "type": "discrete",
             "calculated": "None"
         },
         "event_points": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Points earned during current event",
+            "notes": "Needs to address what gw to link to.",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "snapshot"
         },
         "first_name": {
-            "change": "None",
-            "description": "None",
+            "change": "static",
+            "description": "Player first name",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "string",
+            "type": "descriptive",
+            "calculated": "static"
         },
         "form": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Form of the player",
+            "notes": "Form is a player’s average score per match, calculated from all matches played by his club in the last 30 days. https://fantasy.premierleague.com/help",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "moving average"
         },
         "goals_conceded": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Total number of goals conceded in events player has featured",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "goals_scored": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Total number of goals scored by player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "ict_index": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "ICT Index Score",
+            "notes": "The ICT Index is a football statistical index developed specifically to assess a player as an FPL asset. It uses match event data to generate a single score for three key areas – Influence, Creativity and Threat. ",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "ict_index_rank": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "The current ICT ranking for the player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "discrete",
+            "calculated": "rank"
         },
         "ict_index_rank_type": {
-            "change": "None",
+            "change": "gw",
             "description": "None",
-            "notes": "None",
+            "notes": "Other score than creativity_rank, difference not understood",
             "data_type": "None",
             "type": "None",
             "calculated": "None"
         },
         "id": {
-            "change": "None",
-            "description": "None",
+            "change": "season",
+            "description": "Unique ID for player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "descriptive",
+            "calculated": "static"
         },
         "in_dreamteam": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Flag to identify if player is in the gw dreamteam",
+            "notes": "Based on points ranking for position",
+            "data_type": "boolean",
+            "type": "categorical",
+            "calculated": "rank"
         },
         "influence": {
             "change": "None",
