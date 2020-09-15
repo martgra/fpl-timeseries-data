@@ -12,6 +12,17 @@ jupyter:
     name: python3
 ---
 
+# Exploring datatypes
+
+Loading the available data and looking at data fields to identify:
+
+* change - how data is updated.
+* description - expected reason for data field
+* notes - any notes for the data field
+* data type - identify the data type
+* type - identify if data is continuous, discrete, categorical, descriptive or other
+* calculated - identify how data is calculated
+
 ```{python}
 import os
 import json
@@ -30,10 +41,12 @@ data_list
 ```
 
 ```{python}
+# Get all data currently available from data dir
 elements = [xp.reorder_elements(io.load_dataframe_from_json(i, "elements")) for i in data_list] 
 ```
 
 ```{python}
+# Comparing same element from all snaps to track changes
 xp.compare_elements(elements,"web_name", "Willian")
 ```
 
