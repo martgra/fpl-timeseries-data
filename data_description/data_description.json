@@ -8,7 +8,7 @@
             "notes": {
                 "personal_notes": "The total number of assists during a season, except GW0 where previous season is listed",
                 "official_explanation": "Total goal assists – awarded to the player from the goalscoring team who makes the final pass before a goal is scored, including own goals.",
-                "referance": "https://fantasy.premierleague.com/statistics"
+                "referance": "https://fantasy.premierleague.com/statistics/assists"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -20,7 +20,7 @@
             "notes": {
                 "personal_notes": "Given based on 'bsp' score given in each match",
                 "official_explanation": "The three best performing players in each match according to the BPS will receive additional bonus points - 3 points will be awarded to the highest scoring player, 2 to the second best and 1 to the third.",
-                "referance": "https://fantasy.premierleague.com/statistics"
+                "referance": "https://fantasy.premierleague.com/statistics/bonus"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -32,7 +32,7 @@
             "notes": {
                 "personal_notes": "The score/rating/rank awarded total in a season, based on score from each gw",
                 "official_explanation": "The Bonus Points System (BPS) uses a range of stats to create a BPS score for each player. The three best performing players in each match will be awarded bonus points.",
-                "referance": "https://fantasy.premierleague.com/statistics"
+                "referance": "https://fantasy.premierleague.com/statistics/bps"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -44,7 +44,7 @@
             "notes": {
                 "personal_notes": "Seems to be not to be filled (NaN) if player have no history of not being able to play",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "discrete",
@@ -56,7 +56,7 @@
             "notes": {
                 "personal_notes": "Seems to be not to be filled (NaN) if player have no history of not being able to play.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "discrete",
@@ -67,8 +67,8 @@
             "description": "The total number of clean sheets",
             "notes": {
                 "personal_notes": "How many clean sheets recorded in the course of season",
-                "official_explanation": "None",
-                "referece": "none.noen.com"
+                "official_explanation": "Total clean sheets – awarded to players who do not concede a goal and have played at least 60 minutes.",
+                "referece": "https://fantasy.premierleague.com/statistics/clean_sheets"
             },
             "data_type": "integer",
             "type": "None",
@@ -80,7 +80,7 @@
             "notes": {
                 "personal_notes": "Most probably the player idenfication number",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "None",
@@ -91,8 +91,8 @@
             "description": "Rank of the cornertakers",
             "notes": {
                 "personal_notes": "Should apply to mainly corners - how found is unknown, perhaps number of corners taken during season",
-                "official_explanation": "None",
-                "referece": "none.noen.com"
+                "official_explanation": "This table displays a list of expected set-piece takers for each Premier League side. They are based on a mix of information gathered fom last season’s matches, the Opta statistics, pre-season friendlies and also the players role at previous clubs and predicted role at new sides. The list will be updated constantly as new information becomes available on assigned set-pieces takers. It will also be refreshed throughout the season as roles chop and change.",
+                "referece": "https://fantasy.premierleague.com/the-scout/set-piece-takers"
             },
             "data_type": "float",
             "type": "discrete",
@@ -104,7 +104,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "None",
             "type": "None",
@@ -116,7 +116,7 @@
             "notes": {
                 "personal_notes": "Difference between cost_change_event and cost_change_start unknown",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "categorical",
@@ -128,7 +128,7 @@
             "notes": {
                 "personal_notes": "Difference between cost_change_event_fall and cost_change_start_fall unknown",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "categorical",
@@ -140,7 +140,7 @@
             "notes": {
                 "personal_notes": "Difference between cost_change_event and cost_change_start unknown",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "categorical",
@@ -152,7 +152,7 @@
             "notes": {
                 "personal_notes": "Difference between cost_change_event_fall and cost_change_start_fall unknown",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "categorical",
@@ -164,7 +164,7 @@
             "notes": {
                 "personal_notes": "Creativity assesses player performance in terms of producing goalscoring opportunities for others. It can be used as a guide to identify the players most likely to supply assists. While this analyses frequency of passing and crossing, it also considers pitch location and quality of the final ball.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -176,7 +176,7 @@
             "notes": {
                 "personal_notes": "Rank based on creativity total score for all players in FPL season",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "discrete",
@@ -188,7 +188,7 @@
             "notes": {
                 "personal_notes": "Other score than creativity_rank, difference not understood",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "None",
@@ -200,7 +200,7 @@
             "notes": {
                 "personal_notes": "How rank is calculated is unknown, perhaps number of corners taken during season",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "discrete",
@@ -212,7 +212,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "None",
             "type": "None",
@@ -224,7 +224,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -236,7 +236,7 @@
             "notes": {
                 "personal_notes": "Could be combined with element types object to get player position in text form",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "categorical",
@@ -248,7 +248,7 @@
             "notes": {
                 "personal_notes": "Expectance of playing next round. Needs further investigation",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "discrete",
@@ -260,7 +260,7 @@
             "notes": {
                 "personal_notes": "Expectance of playing this round. Needs further investigation",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "discrete",
@@ -272,7 +272,7 @@
             "notes": {
                 "personal_notes": "Needs to address what gw to link to.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -284,7 +284,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "string",
             "type": "descriptive",
@@ -296,7 +296,7 @@
             "notes": {
                 "personal_notes": "Form is a player’s average score per match, calculated from all matches played by his club in the last 30 days. https://fantasy.premierleague.com/help",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -308,7 +308,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -320,7 +320,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -332,7 +332,7 @@
             "notes": {
                 "personal_notes": "The ICT Index is a football statistical index developed specifically to assess a player as an FPL asset. It uses match event data to generate a single score for three key areas – Influence, Creativity and Threat. ",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -344,7 +344,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "discrete",
@@ -356,7 +356,7 @@
             "notes": {
                 "personal_notes": "Other score than creativity_rank, difference not understood",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "None",
@@ -368,7 +368,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "descriptive",
@@ -380,7 +380,7 @@
             "notes": {
                 "personal_notes": "Based on points ranking for position",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "boolean",
             "type": "categorical",
@@ -392,7 +392,7 @@
             "notes": {
                 "personal_notes": "Seems to be the total accumulated influence gathered throughout the season. Influence evaluates a players impact on a match, taking into account actions that could directly or indirectly affect the match outcome. Part of the ICT index.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -404,7 +404,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "discrete",
@@ -416,7 +416,7 @@
             "notes": {
                 "personal_notes": "Other score than influence_rank, difference not understood",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "None",
@@ -428,7 +428,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -440,7 +440,7 @@
             "notes": {
                 "personal_notes": "Important events regarding the player",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "string",
             "type": "descriptive",
@@ -452,7 +452,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "date_time",
             "type": "continuous",
@@ -464,7 +464,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -476,7 +476,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -488,7 +488,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -500,7 +500,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "discrete",
@@ -512,7 +512,7 @@
             "notes": {
                 "personal_notes": "Applies/relevant for GK",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -524,7 +524,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "None",
             "type": "None",
@@ -536,7 +536,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "string",
             "type": "descriptive",
@@ -548,7 +548,7 @@
             "notes": {
                 "personal_notes": "Must be investigated if it applies to all games where player is in match squad",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -560,7 +560,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -572,7 +572,7 @@
             "notes": {
                 "personal_notes": "Applies to mainly GK",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -584,7 +584,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "string",
             "type": "descriptive",
@@ -596,7 +596,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -608,7 +608,7 @@
             "notes": {
                 "personal_notes": "Not understood - only False entries in dataset as per 2020-09-16",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "boolean",
             "type": "categorical",
@@ -620,7 +620,7 @@
             "notes": {
                 "personal_notes": "Dead variable - seems all are set to None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "string",
             "type": "descriptive",
@@ -632,7 +632,7 @@
             "notes": {
                 "personal_notes": "Seems to indicate the availability of player. Contains 'a' (available), 'i' (injured), 'd' (?), 'n' (loaned out), 'u' (unregistered), 's' (suspended)'",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "string",
             "type": "categorical",
@@ -644,7 +644,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "categorical",
@@ -656,7 +656,7 @@
             "notes": {
                 "personal_notes": "Difference between team and team_code not understood. Probably a more permanent team id and independent of season",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "categorical",
@@ -668,7 +668,7 @@
             "notes": {
                 "personal_notes": "Threat gauges players who are most likely to score goals.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -680,7 +680,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "None",
             "type": "None",
@@ -692,7 +692,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "discrete",
@@ -704,7 +704,7 @@
             "notes": {
                 "personal_notes": "Total number of points accumulated through a season for a player",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -716,7 +716,7 @@
             "notes": {
                 "personal_notes": "Seems to be the total number of transfers in, made in course of season",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -728,7 +728,7 @@
             "notes": {
                 "personal_notes": "Seems to be the total number of transfers in during an event. Resets when new event starts.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -740,7 +740,7 @@
             "notes": {
                 "personal_notes": "Seems to be the total number of transfers out, made in course of season",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "None",
             "type": "None",
@@ -752,7 +752,7 @@
             "notes": {
                 "personal_notes": "Seems to be the total number of transfers in during an event. Resets when new event starts.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
@@ -764,7 +764,7 @@
             "notes": {
                 "personal_notes": "Player’s form divided by player’s value.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -776,7 +776,7 @@
             "notes": {
                 "personal_notes": "Player’s total points divided by player’s value.",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "float",
             "type": "continuous",
@@ -788,7 +788,7 @@
             "notes": {
                 "personal_notes": "Preferred name for visualization",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "string",
             "type": "descriptive",
@@ -800,7 +800,7 @@
             "notes": {
                 "personal_notes": "None",
                 "official_explanation": "None",
-                "referece": "none.noen.com"
+                "referece": "none.none.com"
             },
             "data_type": "integer",
             "type": "continuous",
