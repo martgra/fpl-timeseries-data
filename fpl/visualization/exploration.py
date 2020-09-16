@@ -23,3 +23,4 @@ def compare_elements(snapshot_list, element_id, element_value):
     for i in snapshot_list:
         _df_temp = _df_temp.append(i.loc[i[element_id] == element_value], ignore_index=True)
     display(_df_temp)
+    return(_df_temp)

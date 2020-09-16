@@ -46,8 +46,28 @@ elements = [xp.reorder_elements(io.load_dataframe_from_json(i, "elements")) for 
 ```
 
 ```{python}
+
+```
+
+```{python}
+for i in elements:
+    display(i['status'].value_counts().index)
+
+
+```
+
+```{python}
 # Comparing same element from all snaps to track changes
-xp.compare_elements(elements,"web_name", "Willian")
+temp = xp.compare_elements(elements,"web_name", "Willian")
+
+```
+
+```{python}
+    display(i['team_code'].value_counts().index)
+```
+
+```{python}
+display(temp[["web_name", "status", "news", "chance_of_playing_next_round"]])
 ```
 
 ```{python}

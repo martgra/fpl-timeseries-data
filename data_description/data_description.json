@@ -123,12 +123,12 @@
             "calculated": "rank"
         },
         "creativity_rank_type": {
-            "change": "gw",
+            "change": "None",
             "description": "None",
             "notes": "Other score than creativity_rank, difference not understood",
             "data_type": "integer",
-            "type": "discrete",
-            "calculated": "rank"
+            "type": "None",
+            "calculated": "None"
         },
         "direct_freekicks_order": {
             "change": "gw",
@@ -235,12 +235,12 @@
             "calculated": "rank"
         },
         "ict_index_rank_type": {
-            "change": "gw",
+            "change": "None",
             "description": "None",
             "notes": "Other score than creativity_rank, difference not understood",
-            "data_type": "None",
+            "data_type": "integer",
             "type": "None",
-            "calculated": "None"
+            "calculated": "rank"
         },
         "id": {
             "change": "season",
@@ -259,92 +259,92 @@
             "calculated": "rank"
         },
         "influence": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Total accumulated influance score. ",
+            "notes": "Seems to be the total accumulated influence gathered throughout the season. Influence evaluates a players impact on a match, taking into account actions that could directly or indirectly affect the match outcome. Part of the ICT index.",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "influence_rank": {
-            "change": "None",
-            "description": "None",
+            "change": "continuous",
+            "description": "The Current influence ranking of the player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "discrete",
+            "calculated": "rank"
         },
         "influence_rank_type": {
             "change": "None",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
+            "notes": "Other score than influence_rank, difference not understood",
+            "data_type": "integer",
             "type": "None",
             "calculated": "None"
         },
         "minutes": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Tota amount of minutes played current season",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "news": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "continuous",
+            "description": "News/updates regarding player",
+            "notes": "Important events regarding the player",
+            "data_type": "string",
+            "type": "descriptive",
+            "calculated": "snapshot"
         },
         "news_added": {
-            "change": "None",
-            "description": "None",
+            "change": "continuous",
+            "description": "Timestamp of when news is added",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "date_time",
+            "type": "continuous",
+            "calculated": "snapshot"
         },
         "now_cost": {
-            "change": "None",
-            "description": "None",
+            "change": "continuous",
+            "description": "Current price of player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "snapshot"
         },
         "own_goals": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Total number of own goals scored by player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "penalties_missed": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Total number of penalties missed by player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "penalties_order": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Rank of the penalty takers",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "float",
+            "type": "discrete",
+            "calculated": "rank"
         },
         "penalties_saved": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Total number of penalties saved",
+            "notes": "Applies/relevant for GK",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "penalties_text": {
             "change": "None",
@@ -355,103 +355,103 @@
             "calculated": "None"
         },
         "photo": {
-            "change": "None",
-            "description": "None",
+            "change": "season",
+            "description": "File path to player image",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "string",
+            "type": "descriptive",
+            "calculated": "static"
         },
         "points_per_game": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Average points per game played by player",
+            "notes": "Must be investigated if it applies to all games where player is in match squad",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "average"
         },
         "red_cards": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Total number of red cards awarded to player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "saves": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Total number of saves made by player",
+            "notes": "Applies to mainly GK",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "second_name": {
-            "change": "None",
-            "description": "None",
+            "change": "static",
+            "description": "Players second name",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "string",
+            "type": "descriptive",
+            "calculated": "static"
         },
         "selected_by_percent": {
-            "change": "None",
-            "description": "None",
+            "change": "continuous",
+            "description": "Current selection percentage of the player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "percentage"
         },
         "special": {
             "change": "None",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
+            "notes": "Not understood - only False entries in dataset as per 2020-09-16",
+            "data_type": "boolean",
+            "type": "categorical",
             "calculated": "None"
         },
         "squad_number": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "season",
+            "description": "Player squad number",
+            "notes": "Dead variable - seems all are set to None",
+            "data_type": "string",
+            "type": "descriptive",
+            "calculated": "static"
         },
         "status": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "continuous",
+            "description": "Status of player availability",
+            "notes": "Seems to indicate the availability of player. Contains 'a' (available), 'i' (injured), 'd' (?), 'n' (loaned out), 'u' (unregistered), 's' (suspended)'",
+            "data_type": "string",
+            "type": "categorical",
+            "calculated": "snapshot"
         },
         "team": {
-            "change": "None",
-            "description": "None",
+            "change": "continuous",
+            "description": "Current team of player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "categorical",
+            "calculated": "static"
         },
         "team_code": {
-            "change": "None",
+            "change": "continuous",
             "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "notes": "Difference between team and team_code not understood. Probably a more permanent team id and independent of season",
+            "data_type": "integer",
+            "type": "categorical",
+            "calculated": "static"
         },
         "threat": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Total threat score for season",
+            "notes": "Threat gauges players who are most likely to score goals.",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "threat_rank": {
-            "change": "None",
+            "change": "gw",
             "description": "None",
             "notes": "None",
             "data_type": "None",
@@ -459,84 +459,84 @@
             "calculated": "None"
         },
         "threat_rank_type": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "The current threat ranking for the player",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "discrete",
+            "calculated": "rank"
         },
         "total_points": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "gw",
+            "description": "Total number of points earned by player",
+            "notes": "Total number of points accumulated through a season for a player",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "transfers_in": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "continuous",
+            "description": "Total number of transfers in",
+            "notes": "Seems to be the total number of transfers in, made in course of season",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "transfers_in_event": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "continuous",
+            "description": "Total amount of transfer made in during this event.",
+            "notes": "Seems to be the total number of transfers in during an event. Resets when new event starts.",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "transfers_out": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
+            "change": "continuous",
+            "description": "Total number of transfers out",
+            "notes": "Seems to be the total number of transfers out, made in course of season",
             "data_type": "None",
             "type": "None",
             "calculated": "None"
         },
         "transfers_out_event": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "continuous",
+            "description": "Total amount of transfer made out during this event.",
+            "notes": "Seems to be the total number of transfers in during an event. Resets when new event starts.",
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         },
         "value_form": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "continuous",
+            "description": "Form/value",
+            "notes": "Player’s form divided by player’s value.",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "fraction"
         },
         "value_season": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "continuous",
+            "description": "total_points/value",
+            "notes": "Player’s total points divided by player’s value.",
+            "data_type": "float",
+            "type": "continuous",
+            "calculated": "fraction"
         },
         "web_name": {
-            "change": "None",
-            "description": "None",
-            "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "change": "season",
+            "description": "Players display name",
+            "notes": "Preferred name for visualization",
+            "data_type": "string",
+            "type": "descriptive",
+            "calculated": "static"
         },
         "yellow_cards": {
-            "change": "None",
-            "description": "None",
+            "change": "gw",
+            "description": "Total number of yellow cards",
             "notes": "None",
-            "data_type": "None",
-            "type": "None",
-            "calculated": "None"
+            "data_type": "integer",
+            "type": "continuous",
+            "calculated": "cumulative_sum"
         }
     }
 }
