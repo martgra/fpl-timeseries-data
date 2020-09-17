@@ -10,7 +10,13 @@
             "patternProperties": {
             ".+": { "$ref": "#/definitions/element_property" }
         }
+    },
+    "teams": { 
+        "type": "object",
+        "patternProperties": {
+        ".+": { "$ref": "#/definitions/element_property" }
     }
+}
 
     },
     "definitions": {

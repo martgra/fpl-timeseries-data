@@ -55,3 +55,25 @@ def list_data_dir(dir_path, suffix=".json"):
         list: List holding names of files in directory 
     """      
     return sorted([Path(dir_path,i) for i in os.listdir(dir_path) if Path(i).suffix == suffix])
+
+
+def get_description_dict(dataframe):
+    """Returns dict with data descripton fields based on dataframe columns
+
+    Args:
+        dataframe (pandas.DataFrame): Dataframe to generate data description schema for
+
+    Returns:
+        dict: Dict holding data description based on df columns
+    """    
+    return {i: {
+    "change": "None", 
+    "description": "None", 
+    "notes": {
+        "personal_notes": "None", 
+        "official_explanation": "None", 
+        "referance": "None"},
+    "data_type": "None",
+    "type": "None",
+    "calculated": "cumulative_sum"
+        } for i in dataframe.columns}

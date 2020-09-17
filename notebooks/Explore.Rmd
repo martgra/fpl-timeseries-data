@@ -37,8 +37,10 @@ pd.set_option('display.max_columns', 100)
 
 ```{python}
 data_list = io.list_data_dir("../data")
-data_list
+
 ```
+
+## Explore elements
 
 ```{python}
 # Get all data currently available from data dir
@@ -58,7 +60,7 @@ for i in elements:
 
 ```{python}
 # Comparing same element from all snaps to track changes
-temp = xp.compare_elements(elements,"web_name", "Willian")
+temp = xp.compare_elements(elements,"web_name", "Doherty")
 
 ```
 
@@ -67,7 +69,31 @@ temp = xp.compare_elements(elements,"web_name", "Willian")
 ```
 
 ```{python}
-display(temp[["web_name", "status", "news", "chance_of_playing_next_round"]])
+display(temp.loc[temp["creativity_rank_type"] != ""])
+
+```
+
+## Explore teams
+
+```{python}
+# Get all data currently available from data dir
+elements = [io.load_dataframe_from_json(i, "events") for i in data_list] 
+for i in data_list:
+    print(i)
+```
+
+```{python}
+events = [io.load_dataframe_from_json(i, "events") for i in data_list] 
+teams = [io.load_dataframe_from_json(i, "events") for i in data_list] 
+elements = [xp.reorder_elements(io.load_dataframe_from_json(i, "elements")) for i in data_list] 
+events[-1].head()
+
+elements[-1].loc[elements[-1]["web_name"] == "Fernandes"]
+```
+
+```{python}
+elements[-1].loc[elements[-1]["id"] == 10 ]
+
 ```
 
 ```{python}
