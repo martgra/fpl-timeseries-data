@@ -37,7 +37,6 @@ pd.set_option('display.max_columns', 100)
 
 ```{python}
 data_list = io.list_data_dir("../data")
-
 ```
 
 ## Explore elements
@@ -60,7 +59,7 @@ for i in elements:
 
 ```{python}
 # Comparing same element from all snaps to track changes
-temp = xp.compare_elements(elements,"web_name", "Doherty")
+temp = xp.compare_elements(elements,"id", 302)
 
 ```
 

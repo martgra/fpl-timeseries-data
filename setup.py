@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="fpl--martin-gran", # Replace with your own username
-    version="0.0.1",
+    name="fpl--martin-gran",  # Replace with your own username
+    version="0.0.3",
     author="Martin Gran",
     author_email="martgra@gmail.com",
     description="A Fantasy premier league package",
