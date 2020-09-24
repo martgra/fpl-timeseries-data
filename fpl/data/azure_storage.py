@@ -1,147 +1,133 @@
-"""Implmentation of Azure connection"""
+"""Implmentation of Azure connection."""
 import json
 import os
-import uuid
 from pathlib import Path
+from typing import List
 
-from azure.storage.blob import BlobServiceClient, __version__
+from azure.storage.blob import BlobServiceClient
 from dotenv import load_dotenv
 
 
-class Azure_storage():
-    """ Azure Storage Blob object"""
+class AzureStorage:
+    """Azure Storage Blob class."""
 
-    def __init__(self, connection_string, container_name):
+    def __init__(self, connection_string: str, container_name: str):
+        """Initialize object.
+
+        Args:
+            connection_string (str): Connection string for the storage container
+            container_name (str): Name of the container to connect to
+        """
         self.container_name = container_name
-        self.connection_string = connection_string
-        self.storage_client = BlobServiceClient.from_connection_string(
-            connection_string)
-        self.container_client = self.storage_client.get_container_client(
-            container_name)
+        self.storage_client = BlobServiceClient.from_connection_string(connection_string)
+        self.container_client = self.storage_client.get_container_client(container_name)
 
-    def get_connection_string(self):
-        """Return the connection string
+    def get_storage_client(self) -> BlobServiceClient:
+        """Return the Storage Blob client.
 
         Returns:
-            str: The Azure Connection
-        """
-        return self.connection_string
-
-    def get_container_name(self):
-        """Get the current container name
-
-        Returns:
-            str: Returns the name of the current container
-        """
-        return self.container_name
-
-    def get_storage_client(self):
-        """Return the Storage Blob client
-
-        Returns:
-            BlobServiceClient: client to the current storage account
+            azure.storage.blob.BlobServiceClient: client to the current storage account
         """
         return self.storage_client
 
     def get_container_client(self):
-        """Return the Container client
+        """Return the Container client.
 
         Returns:
-            ContainerClient: client for the current container
+            azure.storage.blob.ContainerClient: client for the current container
         """
         return self.container_client
 
-    def set_container(self, container_name):
-        """Change container within the storage account
+    def set_container(self, container_name: str):
+        """Change container within the storage account.
 
         Args:
             container_name (str): Set new container
         """
         self.container_name = container_name
-        self.container_client = self.storage_client.get_container_client(
-            container_name)
+        self.container_client = self.storage_client.get_container_client(container_name)
 
-    def blobs_list(self, as_list=False):
-        """Return list of all blobs in container
+    def blobs_list(self, as_list=False) -> List[str]:
+        """Return list of all blobs in container.
 
         Args:
-            as_list (bool, optional): If true returns a list of names of blobs as str. Defaults to False.
+            as_list (bool, optional): If true returns a list of names of blobs as str.
+                Defaults to False.
 
         Returns:
-            list: List holding all blobs in container
+            list[str]: List holding all blobs in container wither as str
+                or azure.core.paging.ItemPaged[~azure.storage.blob.BlobProperties]
         """
         if as_list:
             return [i["name"] for i in self.container_client.list_blobs()]
         return self.container_client.list_blobs()
 
-    def get_blob(self, blob_name, return_json=True):
-        """Returns content of specific blob
+    def get_blob(self, blob_name) -> dict:
+        """Return content of specific blob.
 
         Args:
             blob_name (str): Name of the blob to get
-            return_json (bool, optional): Returns the blob as json. Defaults to True.
 
         Returns:
-            json: Content of blob
+            bytes: Content of blob in bytes
         """
-        if return_json:
-            return json.loads(self.container_client.get_blob_client(blob=blob_name).download_blob().readall())
-        else:
-            return self.container_client.get_blob_client(blob=blob_name).download_blob().readall()
+        return json.loads(
+            self.container_client.get_blob_client(blob=blob_name).download_blob().readall()
+        )
 
-    def get_blobs(self, return_json=True):
-        """Gets all blobs in container
+    def get_blobs(self) -> List[dict]:
+        """Get all blobs in container.
 
         Args:
             return_json (bool, optional): Returns json instead of string. Defaults to True.
 
         Returns:
-            list: returns list of either str og json
+            list[dict]: returns list of dicts
         """
-        if return_json:
-            return [json.loads(self.container_client.get_blob_client(blob=i["name"]).download_blob().readall()) for i in self.blobs_list()]
-        else:
-            return [self.container_client.get_blob_client(blob=i["name"]).download_blob().readall() for i in self.blobs_list()]
+        return [
+            json.loads(
+                self.container_client.get_blob_client(blob=i["name"]).download_blob().readall()
+            )
+            for i in self.blobs_list()
+        ]
 
-    def download_blob(self, blob_name, download_file_path="."):
-        """Downloads blob to disk
+    def download_blob(self, blob_name: str, download_file_path="."):
+        """Download a single blob to disk.
 
         Args:
             blob_name (str): Name of blob to download
             download_file_path (str, optional): Path to dir to download to. Defaults to ".".
         """
-        with open(Path(download_file_path, blob_name), "wb") as download_file:
-            download_file.write(self.get_blob(blob_name, return_json=False))
+        with open(Path(download_file_path, blob_name), "w") as download_file:
+            json.dump(self.get_blob(blob_name), download_file, indent=4, ensure_ascii=False)
 
     def download_blobs(self, download_dir_path="."):
-        """Download all blobs in container
+        """Download all blobs in container to disk.
 
         Args:
             download_file_path (str, optional): Path to dir to download to. Defaults to ".".
         """
         for i in self.blobs_list():
-            with open(Path(download_dir_path, i["name"]), "wb") as download_file:
-                download_file.write(self.get_blob(
-                    i["name"], return_json=False))
+            with open(Path(download_dir_path, i["name"]), "w", encoding="utf8") as download_file:
+                json.dump(self.get_blob(i["name"]), download_file, indent=4, ensure_ascii=False)
 
     def download_new_blobs(self, download_dir_path="data"):
-        """Download new blobs that does not exsist in destination
+        """Download new blobs that does not exsist in destination.
 
         Args:
             download_dir_path (str, optional): Path to directory to download to. Defaults to "data".
         """
         try:
             allready_on_disk = os.listdir(download_dir_path)
-            to_download = [i for i in self.blobs_list(
-                as_list=True) if i not in allready_on_disk]
+            to_download = [i for i in self.blobs_list(as_list=True) if i not in allready_on_disk]
             for i in to_download:
-                with open(Path(download_dir_path, i), "wb") as download_file:
-                    download_file.write(self.get_blob(i, return_json=False))
-        except OSError as e:
-            print("Check that path points to a dir. {}".format(e))
+                with open(Path(download_dir_path, i), "w", encoding="utf8") as download_file:
+                    json.dump(self.get_blob(i), download_file, ensure_ascii=False, indent=4)
+        except OSError as error:
+            print("Check that path points to a dir. {}".format(error))
 
-    def upload_blob(self, blob_name, data=None, is_file=False):
-        """Upload data to blob
+    def upload_blob(self, blob_name: str, data=None, is_file=False, overwrite=False):
+        """Upload data to blob.
 
         Args:
             blob_name (str): Name of the local file and to-be-blob
@@ -149,30 +135,33 @@ class Azure_storage():
             is_file (bool, optional): Upload local file instad of in-memory data. Defaults to False.
         """
         if is_file:
-            with open(blob_name, "rb") as data:
-                self.container_client.get_blob_client(
-                    blob=blob_name).upload_blob(data)
+            with open(blob_name) as data:
+                self.container_client.get_blob_client(blob=Path(blob_name).name).upload_blob(
+                    json.dumps(json.load(data), indent=4, ensure_ascii=False), overwrite=overwrite
+                )
         else:
-            self.container_client.get_blob_client(
-                blob=blob_name).upload_blob(bytes(data, 'utf-8'))
+            self.container_client.get_blob_client(blob=blob_name).upload_blob(
+                json.dumps(data, indent=4, ensure_ascii=False)
+            )
 
     def delete_blob(self, blob_name, delete_snapshots=False):
-        """Delete blob
+        """Delete blob.
 
         Args:
             blob_name (str): Name of blob to delete
-            delete_snapshots (bool, optional): To completely delete blob set true. Defaults to False.
+            delete_snapshots (bool, optional): To completely delete blob set true.
+                Defaults to False.
         """
-        self.container_client.get_blob_client(
-            blob=blob_name).delete_blob(delete_snapshots=delete_snapshots)
+        self.container_client.get_blob_client(blob=blob_name).delete_blob(
+            delete_snapshots=delete_snapshots
+        )
 
 
 if __name__ == "__main__":
     # Loads connection string from .env file in current dir
-    # Connection string needs to be added to .env file or passed directly as its out of version control
+    # Connection string needs to be added to .env
+    # file or passed directly as its out of version control
     load_dotenv()
 
     # Creates connection to storage account
-    storage = Azure_storage(
-        os.getenv('AZURE_STORAGE_CONNECTION_STRING'), "fplstats")
-    storage.download_blobs("/home/jason/dev/fpl2021/data")
+    storage = AzureStorage(os.getenv("AZURE_STORAGE_CONNECTION_STRING"), "fplstats")

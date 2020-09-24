@@ -128,3 +128,5 @@ notebooks/*.ipynb
 # Pyre type checker
 .pyre/
 data/*.json
+
+data_backup/*

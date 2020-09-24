@@ -1,5 +1,4 @@
 {
-    "editor.formatOnSave": true,
     "python.sortImports.args": [
         "-rc",
         "-sp isort.cfg"
@@ -8,5 +7,21 @@
         "editor.codeActionsOnSave": {
             "source.organizeImports": true
         }
-    }
+    },
+    "python.pythonPath": "venv/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pydocstyleEnabled": true,
+    "files.trimTrailingWhitespace": true,
+    "python.linting.pylintUseMinimalCheckers": false,
+    "editor.formatOnSave": true,
+    "python.linting.enabled": true,
+    "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--line-length",
+        "100"
+    ],
+    "editor.rulers": [
+        100
+    ]
 }
