@@ -25,6 +25,15 @@ class CosmoContainer(ABC):
         cosmos_account_client (azure.cosmos.CosmosClient): Cosmos account client
         database (azure.cosmos.DatabaseProxy): Cosmos Database proxy client
         container (azure.cosmos.ContainerProxy): Cosmos container client
+
+    Example:
+        load_dotenv()
+        cosmos_element_client = ElementsInserter(
+            os.getenv("AZURE_COSMOS_URI"),
+            os.getenv("AZURE_COSMOS_TOKEN"),
+            {"database": "fplstats", "container": "elements", "partition_key": "download_time"},
+        )
+        latest_gameweek_data = cosmos_element_client.get_latest_gameweek()[:1]
     """
 
     def __init__(self, endpoint, auth_key, database_meta):

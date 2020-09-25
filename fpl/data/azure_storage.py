@@ -10,7 +10,18 @@ from tqdm import tqdm
 
 
 class AzureStorage:
-    """Azure Storage Blob class."""
+    """Azure Storage Blob class.
+
+    Attributes:
+        container_name (str): The name of the connected container
+        storage_client (azure.storage.blob.BlobServiceClient): Storage account client
+        container_client (azure.storage.blob.ContainerClient): Container client
+
+    Example:
+        load_dotenv()
+        storage = AzureStorage(os.getenv("AZURE_STORAGE_CONNECTION_STRING"), "fplstats")
+        storage.download_new_blobs(Path(Path(__file__).resolve().parents[1], "data"))
+    """
 
     def __init__(self, connection_string: str, container_name: str):
         """Initialize object.
