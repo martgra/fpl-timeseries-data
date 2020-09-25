@@ -130,3 +130,5 @@ notebooks/*.ipynb
 data/*.json
 
 data_backup/*
+
+.vscode

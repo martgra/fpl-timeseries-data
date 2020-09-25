@@ -161,6 +161,54 @@ class CosmoContainer(ABC):
         """
         return list(self.container.query_items(query=query, enable_cross_partition_query=True))
 
+    def get_latest_download_time(self) -> str:
+        """Get timestamp of latest download.
+
+        Returns:
+            str: timestamp in format: yyyy-MM-ddTHH:mm:ss.fffffffZ
+        """
+        get_latest_download = "SELECT VALUE MAX(c.download_time) from c"
+        return self.search_db(get_latest_download)[0]
+
+    def get_latest_download(self) -> list:
+        """Get latest download.
+
+        Returns:
+            list[dict]: List holding elements from the latest download
+        """
+        try:
+            latest = self.get_latest_download_time()
+            select_latest_query = "SELECT * from c WHERE c.download_time = '{}'".format(latest)
+            return self.search_db(select_latest_query)
+        except IndexError:
+            print("No data in db")
+            return []
+
+    def get_latest_gameweek_number(self) -> int:
+        """Get latest gameweek number
+
+        Returns:
+            int: Number of latest downloaded gameweek
+        """
+        get_latest_gameweek = "SELECT VALUE MAX(c.gameweek) from c"
+        return self.search_db(get_latest_gameweek)[0]
+
+    def get_latest_gameweek(self) -> list:
+        """Get elements from latest gameweek.
+
+        Returns:
+            list[dict]: List holding all elements from the latest gameweek
+        """
+        try:
+            get_latest_gameweek = self.get_latest_gameweek_number()
+            select_latest_query = "SELECT * from c WHERE c.gameweek = {}".format(
+                get_latest_gameweek
+            )
+            return self.search_db(select_latest_query)
+        except IndexError:
+            print("No data in db")
+            return []
+
 
 class ElementsInserter(CosmoContainer):
     """Class for interacting with elements container.

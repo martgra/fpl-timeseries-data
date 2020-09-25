@@ -1,5 +1,5 @@
 azure-storage-blob
-pip install azure-cosmos
+azure-cosmos
 python-dotenv
 notebook
 jupytext
