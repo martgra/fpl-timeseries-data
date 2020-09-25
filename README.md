@@ -6,7 +6,7 @@ Oppsett
 
 ### Getting started
 
-Repoet baserer seg på python3 og jupyter med jupytext for smidig versjonskontroll. 
+Repoet baserer seg på python3 og jupyter med jupytext for smidig versjonskontroll.
 
 ```bash
 git clone https://github.com/martgra/fpl2021.git
@@ -22,9 +22,9 @@ pip install -r requirements
 Datasettet fra Fantasy finnes på følgende link.
 https://fantasy.premierleague.com/api/bootstrap-static/
 
-Per nå lastes det ned hver 6. time og lagres som et "snapshot" med format 
+Per nå lastes det ned hver 6. time og lagres som et "snapshot" med format
 ```
-%Y-%m-%dT%H:%M:%SZ_data.json 
+%Y-%m-%dT%H:%M:%SZ_data.json
 ```
 
 Tilgang til disse dataene krever "connection string" som fåes av repo-eier. Brukes sammen med modulen azure_storage.py
@@ -56,3 +56,7 @@ https://medium.com/@bram.vanherle1/fantasy-premier-league-api-authentication-gui
 * Historiske data for FPL
     https://github.com/vaastav/Fantasy-Premier-League
 
+
+### Time series
+
+<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/3314375" data-url="https://flo.uri.sh/visualisation/3314375/embed" aria-label=""><script src="https://public.flourish.studio/resources/embed.js"></script></div>

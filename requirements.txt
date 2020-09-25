@@ -7,3 +7,4 @@ pandas
 numpy
 requests
 tqdm
+seaborn
