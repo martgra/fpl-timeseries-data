@@ -180,12 +180,12 @@ class CosmoContainer(ABC):
             latest = self.get_latest_download_time()
             select_latest_query = "SELECT * from c WHERE c.download_time = '{}'".format(latest)
             return self.search_db(select_latest_query)
-        except IndexError:
+        except KeyError:
             print("No data in db")
             return []
 
     def get_latest_gameweek_number(self) -> int:
-        """Get latest gameweek number
+        """Get latest gameweek number.
 
         Returns:
             int: Number of latest downloaded gameweek
@@ -205,7 +205,7 @@ class CosmoContainer(ABC):
                 get_latest_gameweek
             )
             return self.search_db(select_latest_query)
-        except IndexError:
+        except KeyError:
             print("No data in db")
             return []
 

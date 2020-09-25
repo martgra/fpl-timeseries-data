@@ -6,6 +6,7 @@ from typing import List
 
 from azure.storage.blob import BlobServiceClient
 from dotenv import load_dotenv
+from tqdm import tqdm
 
 
 class AzureStorage:
@@ -107,7 +108,7 @@ class AzureStorage:
         Args:
             download_file_path (str, optional): Path to dir to download to. Defaults to ".".
         """
-        for i in self.blobs_list():
+        for i in tqdm(self.blobs_list(), desc="Downloading all blobs"):
             with open(Path(download_dir_path, i["name"]), "w", encoding="utf8") as download_file:
                 json.dump(self.get_blob(i["name"]), download_file, indent=4, ensure_ascii=False)
 
@@ -120,7 +121,7 @@ class AzureStorage:
         try:
             allready_on_disk = os.listdir(download_dir_path)
             to_download = [i for i in self.blobs_list(as_list=True) if i not in allready_on_disk]
-            for i in to_download:
+            for i in tqdm(to_download, desc="Downloading new blobs"):
                 with open(Path(download_dir_path, i), "w", encoding="utf8") as download_file:
                     json.dump(self.get_blob(i), download_file, ensure_ascii=False, indent=4)
         except OSError as error:
