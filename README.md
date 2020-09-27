@@ -56,7 +56,3 @@ https://medium.com/@bram.vanherle1/fantasy-premier-league-api-authentication-gui
 * Historiske data for FPL
     https://github.com/vaastav/Fantasy-Premier-League
 
-
-### Time series
-
-<div class="flourish-embed flourish-bar-chart-race" data-src="visualisation/3314375" data-url="https://flo.uri.sh/visualisation/3314375/embed" aria-label=""><script src="https://public.flourish.studio/resources/embed.js"></script></div>
