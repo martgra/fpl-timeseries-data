@@ -168,7 +168,11 @@ class CosmoContainer(ABC):
         Returns:
             list[dict]: Result of query
         """
-        return list(self.container.query_items(query=query, enable_cross_partition_query=True))
+        return list(
+            self.container.query_items(
+                query=query, enable_cross_partition_query=True, max_item_count=40000
+            )
+        )
 
     def get_latest_download_time(self) -> str:
         """Get timestamp of latest download.

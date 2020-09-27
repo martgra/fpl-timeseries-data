@@ -132,3 +132,4 @@ data/*.json
 data_backup/*
 
 .vscode
+/notebooks/exported/*

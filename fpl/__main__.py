@@ -18,5 +18,6 @@ test_client = ElementsInserter(
 )
 
 # Uncomment for examples of function
-storage.download_new_blobs(Path(Path(__file__).resolve().parents[1], "data"))
+# storage.download_new_blobs(Path(Path(__file__).resolve().parents[1], "data"))
 # print(test_client.get_latest_gameweek()[:1])
+test_client.update_db()
