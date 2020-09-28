@@ -14,11 +14,13 @@ jupyter:
 
 ```{python}
 import os
+from pathlib import Path
 
 from dotenv import load_dotenv
 import pandas as pd
 
 from fpl.data.cosmos import ElementsInserter
+from fpl.data.io import load_json
 from fpl.visualization.display import make_race_bar_data
 ```
 
@@ -29,10 +31,7 @@ cosmos = ElementsInserter(
     os.getenv("AZURE_COSMOS_TOKEN"),
     {"database": "fplstats", "container": "elements", "partition_key": "download_time"},
 )
-```
-
-```{python}
-cosmos.search_db("SELECT c.web_name, c.team, c.selected_by_percent, c.cost_change_start, c.download_time, (c.transfers_in - c.transfers_out) AS diff from c")
+DATA_FOLDER = Path("exported")
 ```
 
 ```{python}
@@ -47,15 +46,14 @@ df = pd.DataFrame(data)
 
 net_transfers = df [["web_name","download_time","diff"]]
 net_transfers = make_race_bar_data(net_transfers)
-net_transfers.to_csv("./net_transfer.csv")
-
+net_transfers.to_csv(Path(DATA_FOLDER, "net_transfer.csv"))
 ```
 
 ```{python}
 # Net transfers per team
 net_transfers_by_team = df[["web_name","download_time","diff", "team"]]
 net_transfers_by_team = net_transfers_by_team.groupby(['team', "download_time"]).sum().reset_index()
-from fpl.data.io import load_json
+
 j = load_json("/home/jason/dev/fpl2021/data/2020-09-13T00-00-00Z_data.json")
 team_names = [(i["id"], i["name"]) for i in j["teams"]]
 teams = pd.DataFrame(team_names)
@@ -63,7 +61,7 @@ teams.columns = ["team", "name"]
 net_transfers_by_team = net_transfers_by_team.merge(teams, how="left", on=["team"])
 
 net_transfers_by_team = make_race_bar_data(net_transfers_by_team, index="name")
-net_transfers_by_team.to_csv("./teams_net_transfer.csv")
+net_transfers_by_team.to_csv(Path(DATA_FOLDER, "teams_net_transfer.csv"))
 ```
 
 ```{python}
@@ -71,7 +69,7 @@ net_transfers_by_team.to_csv("./teams_net_transfer.csv")
 
 cost_change = df[["web_name", "download_time", "cost_change_start"]]
 cost_change = make_race_bar_data(cost_change, values="cost_change_start")
-cost_change.to_csv("./cost_change.csv")
+cost_change.to_csv(Path(DATA_FOLDER,"cost_change.csv"))
 ```
 
 ```{python}
@@ -80,7 +78,7 @@ cost_change.to_csv("./cost_change.csv")
 selected_by = df[["web_name", "download_time", "selected_by_percent"]]
 selected_by = selected_by.astype({"selected_by_percent": float})
 selected_by = make_race_bar_data(selected_by, values="selected_by_percent")
-selected_by.to_csv("./selected_by.csv")
+selected_by.to_csv(Path(DATA_FOLDER,"selected_by.csv"))
 ```
 
 ```{python}
@@ -88,8 +86,7 @@ selected_by.to_csv("./selected_by.csv")
 net_transfers_by_team = df[["web_name","download_time","selected_by_percent", "team"]]
 net_transfers_by_team = net_transfers_by_team.astype({"selected_by_percent": float})
 
-net_transfers_by_team = net_transfers_by_team.groupby(['team', "download_time"]).agg(lambda x: sum(sorted(x)[-3:])/3).reset_index()
-display(net_transfers_by_team)
+net_transfers_by_team = net_transfers_by_team.groupby(['team', "download_time"]).agg(lambda x: sum(sorted(x)[-10:])/10).reset_index()
 
 from fpl.data.io import load_json
 j = load_json("/home/jason/dev/fpl2021/data/2020-09-13T00-00-00Z_data.json")
@@ -99,36 +96,9 @@ teams.columns = ["team", "name"]
 net_transfers_by_team = net_transfers_by_team.merge(teams, how="left", on=["team"])
 
 net_transfers_by_team = make_race_bar_data(net_transfers_by_team, index="name", values="selected_by_percent")
-net_transfers_by_team.to_csv("./teams_selection.csv")
+net_transfers_by_team.to_csv(Path(DATA_FOLDER,"teams_selection.csv"))
 ```
 
 ```{python}
-# Create bar color for each player
 
-teams = [{'team': 'Arsenal', 'id': 1, 'color': "#DB0007"},
- {'team': 'Aston Villa', 'id': 2, 'color': "#95bfe5"},
- {'team': 'Brighton', 'id': 3, 'color': "#0057B8"},
- {'team': 'Burnley', 'id': 4, 'color': "#6C1D45"},
- {'team': 'Chelsea', 'id': 5, 'color': "#034694"},
- {'team': 'Crystal Palace', 'id': 6, 'color': "#1B458F"},
- {'team': 'Everton', 'id': 7, 'color': "#003399"},
- {'team': 'Fulham', 'id': 8, 'color': "#fffffff"},
- {'team': 'Leicester', 'id': 9, 'color': "#003090"},
- {'team': 'Leeds', 'id': 10, 'color': "#FFCD00"},
- {'team': 'Liverpool', 'id': 11, 'color': "#c8102E"},
- {'team': 'Man City', 'id': 12, 'color': "#6CABDD"},
- {'team': 'Man Utd', 'id': 13, 'color': "#DA291C"},
- {'team': 'Newcastle', 'id': 14, 'color': "#241F20"},
- {'team': 'Sheffield Utd', 'id': 15, 'color': "#ee2737"},
- {'team': 'Southampton', 'id': 16, 'color': "#d71920"},
- {'team': 'Spurs', 'id': 17, 'color': "#132257"},
- {'team': 'West Brom', 'id': 18, 'color': "#122f67"},
- {'team': 'West Ham', 'id': 19, 'color': "#7A263A"},
- {'team': 'Wolves', 'id': 20, 'color': "#FDB913"}]
-
-for i in players:
-    i["color"] = teams[i["id"]]["color"]
-    i["team_name"] = teams[i["id"]]["team"]
-players = ["{}: {}".format(i["name"], i["color"]) for i in players]
-print(u"\n".join(players))
 ```

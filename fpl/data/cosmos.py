@@ -222,6 +222,23 @@ class CosmoContainer(ABC):
             print("No data in db")
             return []
 
+    def update_one(self, document: dict):
+        """Update one item in Cosmos.
+
+        Args:
+            document (dict): dict holding at least {"id": str}
+        """
+        self.container.upsert_item(document)
+
+    def update_all(self, documents: list):
+        """Update bulk of documents in list.
+
+        Args:
+            documents (list[dict]): List holding dicts containing at least {"id": str}
+        """
+        for document in documents:
+            self.container.upsert_item(document)
+
 
 class ElementsInserter(CosmoContainer):
     """Class for interacting with elements container.
