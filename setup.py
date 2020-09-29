@@ -21,6 +21,6 @@ setuptools.setup(
     python_requires=">=3.6",
     entry_points="""
         [console_scripts]
-        fpl123=fpl.cli:main
+        fantasy=fpl.__main__
         """,
 )

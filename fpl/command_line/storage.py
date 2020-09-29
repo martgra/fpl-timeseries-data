@@ -1,17 +1,10 @@
-"""Application CLI."""
+"""CLI Storage module."""
 
 import os
 
 import click
-from dotenv import load_dotenv
 
 from fpl.data.azure_storage import AzureStorage
-
-
-@click.group(help="FPL cli")
-def cli():
-    """CLI function."""
-    load_dotenv()
 
 
 @click.group(help="Procedures to download data from Azure Blob Storage")
@@ -62,13 +55,3 @@ def list_storage(storage_client):
     """List blobs in Azure Storage."""
     for blob in storage_client.blobs_list(as_list=True):
         print(blob)
-
-
-def main():
-    """Entry."""
-    cli.add_command(storage)
-    cli()
-
-
-if __name__ == "__main__":
-    main()
