@@ -38,13 +38,7 @@ def storage(ctx):
 )
 @click.pass_obj
 def download_bulk(storage_client, data_dir, download_all):
-    """[summary]
-
-    Args:
-        storage_client ([type]): [description]
-        data_dir ([type]): [description]
-        download_all ([type]): [description]
-    """ """Download new blobs."""
+    """Download many blobs to local storage."""
     if download_all:
         storage_client.download_blobs(download_dir_path=data_dir)
     else:
@@ -58,24 +52,14 @@ def download_bulk(storage_client, data_dir, download_all):
 )
 @click.pass_obj
 def download_one(storage_client, blob_name, data_dir):
-    """[summary]
-
-    Args:
-        storage ([type]): [description]
-        data_dir ([type]): [description]
-        blob_name ([type]): [description]
-    """
+    """Download one blob to local storage."""
     storage_client.download_blob(blob_name, data_dir)
 
 
 @storage.command(name="list", help="List content of storage container")
 @click.pass_obj
 def list_storage(storage_client):
-    """[summary]
-
-    Args:
-        storage_client ([type]): [description]
-    """
+    """List blobs in Azure Storage."""
     for blob in storage_client.blobs_list(as_list=True):
         print(blob)
 
