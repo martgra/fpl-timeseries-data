@@ -21,20 +21,32 @@ def cosmos_cli(ctx):
 
 
 @cosmos_cli.command(name="dump")
-@click.option("--path", "-p", type=click.Path(exists=False), default="./dump")
-@click.option("--last", "-l", is_flag=True)
-@click.option("--format", "-f", type=click.Choice(["json", "csv"]))
+@click.option(
+    "--path",
+    "-p",
+    type=click.Path(exists=False),
+    default="./dump",
+    help="File path to where to write data dump",
+)
+@click.option("--last", "-l", is_flag=True, help="Get data with last timestamp")
+@click.option(
+    "--format-type",
+    "-f",
+    type=click.Choice(["json", "csv"]),
+    help="Choose format in which to dump data",
+)
 @click.pass_obj
-def dump_to_csv(db_client, path, last, format):
+def dump(db_client, path, last, format_type):
+    """Dump all or latest data."""
     path = Path(path)
     if str(path.suffix) == "":
         path = Path(str(path) + "." + format)
 
     if last:
-        df = pd.DataFrame(db_client.get_latest_download())
+        dataframe = pd.DataFrame(db_client.get_latest_download())
     else:
-        df = pd.DataFrame(db_client.search_db())
-    if format == "csv":
-        df.to_csv(path)
+        dataframe = pd.DataFrame(db_client.search_db())
+    if format_type == "csv":
+        dataframe.to_csv(path)
     else:
-        df.to_json(path, force_ascii=False, orient="records", indent=4)
+        dataframe.to_json(path, force_ascii=False, orient="records", indent=4)
