@@ -5,9 +5,15 @@ name: Python package
 
 on:
   push:
-    branches: [ dev ]
+    branches:
+    - "**"
+    branches-ignore:
+    - dev
+    - master
   pull_request:
-    branches: [ dev ]
+    branches:
+    - dev
+    - master
 
 jobs:
   build:
