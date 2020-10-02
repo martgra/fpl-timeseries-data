@@ -8,16 +8,22 @@ Oppsett
 
 The repo is based in python3 and jupyter with jupytext for agile version control.
 
+#### **Install package**
 ```bash
 git clone https://github.com/martgra/fpl2021.git
 cd fpl2021
 python3 -m venv venv
 source venv/bin/activate
+# On windows venv\Scripts\activate
 pip install -r requirements
 pip install -e .
+touch .env
 ```
-
-
+Add the following to the created ```.env``` file
+```bash
+# .env
+AZURE_STORAGE_CONNECTION_STRING="https://martinfplstats1337.blob.core.windows.net/fplstats"
+```
 
 ### Dataset
 The dataset from Fantasy Premier League is accessed  by folling this link.
@@ -31,7 +37,7 @@ As of now the dataset is downloaded every 6th hour (UTC) and stored as as Azure 
 For now access to the blob demands a "connection string" that can be required by the repo owner. Used together with the azure_storage.py module.
 ```python
 # Download all new data from Azure Blob Storage to disk
-python fpl/azure_storage.py
+$ fantasy download-all -d <PATH_TO_DIR_TO_STORE_DATA>
 ```
 
 
