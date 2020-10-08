@@ -8,3 +8,4 @@ numpy
 requests
 tqdm
 seaborn
+click
