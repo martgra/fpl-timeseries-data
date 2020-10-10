@@ -67,6 +67,7 @@ def create_opponents(
         teams_data (list): List holding teams data loaded from /api/boostrap-static dump
         fixtures_uri (str, optional): Path the FPL fixtures list.
             Defaults to "https://fantasy.premierleague.com/api/fixtures/".
+        sort (boolean, optional): Sort opponents on gameweek. Defaults to False.
 
     Returns:
         dict: {team_name: [{team: str, difficulty: int, venue: str}]}
