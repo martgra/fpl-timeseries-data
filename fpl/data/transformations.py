@@ -59,7 +59,7 @@ def add_unique_id(elements: list):
 
 
 def create_opponents(
-    teams_data: list, fixtures_uri="https://fantasy.premierleague.com/api/fixtures/"
+    teams_data: list, fixtures_uri="https://fantasy.premierleague.com/api/fixtures/", sort=False
 ) -> dict:
     """Return the fixtures list for each PL team.
 
@@ -98,7 +98,11 @@ def create_opponents(
                     }
                 )
 
-        all_teams[name_mapping[y]] = sorted(
-            opponents, key=lambda i: i["gameweek"] if i["gameweek"] else 99999
-        )
+        if sort:
+            all_teams[name_mapping[y]] = sorted(
+                opponents, key=lambda i: i["gameweek"] if i["gameweek"] else 99999
+            )
+        else:
+            all_teams[name_mapping[y]] = opponents
+
     return all_teams
