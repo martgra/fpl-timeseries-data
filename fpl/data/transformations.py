@@ -85,6 +85,7 @@ def create_opponents(
                         "team": name_mapping[i["team_a"]],
                         "difficulty": i["team_h_difficulty"],
                         "venue": "h",
+                        "gameweek": i["event"],
                     }
                 )
             if i["team_a"] == y:
@@ -93,7 +94,11 @@ def create_opponents(
                         "team": name_mapping[i["team_h"]],
                         "difficulty": i["team_a_difficulty"],
                         "venue": "a",
+                        "gameweek": i["event"],
                     }
                 )
-        all_teams[name_mapping[y]] = opponents
+
+        all_teams[name_mapping[y]] = sorted(
+            opponents, key=lambda i: i["gameweek"] if i["gameweek"] else 99999
+        )
     return all_teams

@@ -10,3 +10,4 @@ def test_teams_fixtures(teams_fixtures, data_object):
     for i in teams_events:
         assert len(teams_events[i]) == 38
         assert len(set(y["team"] for y in teams_events[i])) == 19
+    print(teams_events["Man City"])
