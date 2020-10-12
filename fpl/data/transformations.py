@@ -1,10 +1,7 @@
 """Common transformation."""
 import hashlib
-from pathlib import Path
 
 import requests
-
-import fpl.data.io as io
 
 
 def get_game_week(events: list) -> int:
@@ -107,3 +104,36 @@ def create_opponents(
             all_teams[name_mapping[y]] = opponents
 
     return all_teams
+
+
+def get_team_opponents(all_teams: list, team_name: str, from_gameweek=1, number_fixtures=37):
+    """Return fixtures data for a specific team.
+
+    Args:
+        all_teams (list): All teams fixtures list.
+        team_name (str): The name of team to return fixtures on
+        from_gameweek (int, optional): Fixtures from gameweek. Defaults to 1.
+        number_fixtures (int, optional): Number of fixtures to return. Defaults to 37.
+
+    Returns:
+        dict: {
+        "opponents": list,
+        "in_gameweeks": dict,
+        "postponed": boolen,
+        "has_double_gw": boolean,
+    }
+    """
+    team_fixtures = all_teams[team_name][from_gameweek - 1 : from_gameweek - 1 + number_fixtures]
+    if from_gameweek + number_fixtures > 1 + len(all_teams[team_name]):
+        number_fixtures = len(all_teams[team_name]) + 1 - from_gameweek
+
+    gameweeks = [i["gameweek"] for i in team_fixtures]
+    gameweeks = {
+        i: gameweeks.count(i) for i in range(from_gameweek, from_gameweek + number_fixtures, 1)
+    }
+    return {
+        "opponents": team_fixtures,
+        "in_gameweeks": gameweeks,
+        "postponed": bool([i for i in gameweeks if gameweeks[i] < 1]),
+        "has_double_gw": bool([i for i in gameweeks if gameweeks[i] > 1]),
+    }
