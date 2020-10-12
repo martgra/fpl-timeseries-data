@@ -115,6 +115,11 @@ def get_team_opponents(all_teams: list, team_name: str, from_gameweek=1, number_
         from_gameweek (int, optional): Fixtures from gameweek. Defaults to 1.
         number_fixtures (int, optional): Number of fixtures to return. Defaults to 37.
 
+    Example:
+        all_teams = create_opponents(
+        data["teams"], fixtures_uri="https://fantasy.premierleague.com/api/fixtures/")
+        fixtures = get_team_opponents(all_teams, "Man City", 1, 5)
+
     Returns:
         dict: {
         "opponents": list,
