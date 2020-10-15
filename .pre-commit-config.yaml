@@ -1,0 +1,35 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.4.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+-   repo: https://github.com/psf/black
+    rev: 19.3b0
+    hooks:
+    -   id: black
+        args: ["--line-length", "100"]
+        exclude: tests
+
+-   repo: https://gitlab.com/pycqa/flake8
+    rev: 3.8.3
+    hooks:
+    - id: flake8
+      exclude: tests
+      args: ['--config=setup.cfg', '--exit-zero']
+      additional_dependencies:
+        - flake8-bugbear
+        - flake8-docstrings
+-   repo: local
+    hooks:
+    - id: pylint
+      exclude: tests
+      name: pylint
+      entry: venv/bin/python -m pylint
+      args: ['--rcfile=setup.cfg',"--fail-under=9"]
+      language: system
+      types: [python]

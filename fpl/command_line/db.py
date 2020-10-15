@@ -17,16 +17,10 @@ def cosmos_cli(ctx, uri, token):
     common = {"database": "fplstats", "container": "elements", "partition_key": "download_time"}
     try:
         if uri and token:
-            db_client = ElementsInserter(
-                uri,
-                token,
-                common,
-            )
+            db_client = ElementsInserter(uri, token, common)
         else:
             db_client = ElementsInserter(
-                os.getenv("AZURE_COSMOS_URI"),
-                os.getenv("AZURE_COSMOS_TOKEN"),
-                common,
+                os.getenv("AZURE_COSMOS_URI"), os.getenv("AZURE_COSMOS_TOKEN"), common
             )
         ctx.obj = db_client
     except TypeError:

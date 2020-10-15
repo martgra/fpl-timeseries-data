@@ -40,7 +40,6 @@ class AzureStorage:
             self.container_client = ContainerClient.from_container_url(connection_string)
             print("Read Access only")
 
-
     def get_storage_client(self) -> BlobServiceClient:
         """Return the Storage Blob client.
 
