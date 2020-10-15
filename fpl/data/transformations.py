@@ -1,6 +1,8 @@
 """Common transformation."""
 import hashlib
 
+import requests
+
 
 def get_game_week(events: list) -> int:
     """Get the gameweek from a events list.
@@ -11,7 +13,10 @@ def get_game_week(events: list) -> int:
     Returns:
         int: Current gameweek
     """
-    return list(filter(lambda x: x["is_current"] is True, events))[0]["id"]
+    gw = list(filter(lambda x: x["is_current"] is True, events))
+    if gw:
+        return gw[0]["id"]
+    return 0
 
 
 def create_id(element: dict) -> str:
@@ -48,3 +53,92 @@ def add_unique_id(elements: list):
     """
     list(map(lambda x: x.update({"player_id": x.pop("id")}), elements))
     list(map(lambda x: x.update({"id": create_id(x)}), elements))
+
+
+def create_opponents(
+    teams_data: list, fixtures_uri="https://fantasy.premierleague.com/api/fixtures/", sort=False
+) -> dict:
+    """Return the fixtures list for each PL team.
+
+    Args:
+        teams_data (list): List holding teams data loaded from /api/boostrap-static dump
+        fixtures_uri (str, optional): Path the FPL fixtures list.
+            Defaults to "https://fantasy.premierleague.com/api/fixtures/".
+        sort (boolean, optional): Sort opponents on gameweek. Defaults to False.
+
+    Returns:
+        dict: {team_name: [{team: str, difficulty: int, venue: str}]}
+    """
+    url = fixtures_uri
+    fpl_json = requests.get(url).json()
+    name_mapping = {i["id"]: i["name"] for i in teams_data}
+    teams = set([i["team_a"] for i in fpl_json])
+    all_teams = {}
+    for y in teams:
+        opponents = []
+        for i in fpl_json:
+            if i["team_h"] == y:
+                opponents.append(
+                    {
+                        "team": name_mapping[i["team_a"]],
+                        "difficulty": i["team_h_difficulty"],
+                        "venue": "h",
+                        "gameweek": i["event"],
+                    }
+                )
+            if i["team_a"] == y:
+                opponents.append(
+                    {
+                        "team": name_mapping[i["team_h"]],
+                        "difficulty": i["team_a_difficulty"],
+                        "venue": "a",
+                        "gameweek": i["event"],
+                    }
+                )
+
+        if sort:
+            all_teams[name_mapping[y]] = sorted(
+                opponents, key=lambda i: i["gameweek"] if i["gameweek"] else 99999
+            )
+        else:
+            all_teams[name_mapping[y]] = opponents
+
+    return all_teams
+
+
+def get_team_opponents(all_teams: list, team_name: str, from_gameweek=1, number_fixtures=37):
+    """Return fixtures data for a specific team.
+
+    Args:
+        all_teams (list): All teams fixtures list.
+        team_name (str): The name of team to return fixtures on
+        from_gameweek (int, optional): Fixtures from gameweek. Defaults to 1.
+        number_fixtures (int, optional): Number of fixtures to return. Defaults to 37.
+
+    Example:
+        all_teams = create_opponents(
+        data["teams"], fixtures_uri="https://fantasy.premierleague.com/api/fixtures/")
+        fixtures = get_team_opponents(all_teams, "Man City", 1, 5)
+
+    Returns:
+        dict: {
+        "opponents": list,
+        "in_gameweeks": dict,
+        "postponed": boolen,
+        "has_double_gw": boolean,
+    }
+    """
+    team_fixtures = all_teams[team_name][from_gameweek - 1 : from_gameweek - 1 + number_fixtures]
+    if from_gameweek + number_fixtures > 1 + len(all_teams[team_name]):
+        number_fixtures = len(all_teams[team_name]) + 1 - from_gameweek
+
+    gameweeks = [i["gameweek"] for i in team_fixtures]
+    gameweeks = {
+        i: gameweeks.count(i) for i in range(from_gameweek, from_gameweek + number_fixtures, 1)
+    }
+    return {
+        "opponents": team_fixtures,
+        "in_gameweeks": gameweeks,
+        "postponed": bool([i for i in gameweeks if gameweeks[i] < 1]),
+        "has_double_gw": bool([i for i in gameweeks if gameweeks[i] > 1]),
+    }
