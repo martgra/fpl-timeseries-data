@@ -20,6 +20,10 @@ jobs:
     strategy:
       matrix:
         python-version:  [3.6, 3.7, 3.8]
+    env:
+      PYTHON: ${{ matrix.python-version }}
+      OS: 'ubuntu-latest'
+
 
     steps:
     - uses: actions/checkout@v2
@@ -62,5 +66,5 @@ jobs:
         directory: ./coverage/reports/
         flags: unittests
         env_vars: OS,PYTHON
-        name: codecov-umbrella
+        name: FPL
         fail_ci_if_error: true
