@@ -55,6 +55,17 @@ def add_unique_id(elements: list):
     list(map(lambda x: x.update({"id": create_id(x)}), elements))
 
 
+def add_team_name(elements: list, teams: list):
+    """Add team name to element.
+
+    Args:
+        elements (list[dict]): list holding the elements
+        teams (list[dict]): list holding teams
+    """
+    teams = {i["id"]: i["name"] for i in teams}
+    list(map(lambda x: x.update({"team_name": teams[x["team"]]}), elements))
+
+
 def create_opponents(
     teams_data: list, fixtures_uri="https://fantasy.premierleague.com/api/fixtures/", sort=False
 ) -> dict:
@@ -142,3 +153,7 @@ def get_team_opponents(all_teams: list, team_name: str, from_gameweek=1, number_
         "postponed": bool([i for i in gameweeks if gameweeks[i] < 1]),
         "has_double_gw": bool([i for i in gameweeks if gameweeks[i] > 1]),
     }
+
+
+def add_fixtures(elements: list, all_teams: list):
+    list(map(lambda x: get_team_opponents(all_teams, x["team"]), elements))

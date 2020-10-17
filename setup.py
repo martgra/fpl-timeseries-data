@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="fpl--martin-gran",  # Replace with your own username
-    version="0.1.0",
+    version="0.1.1",
     author="Martin Gran",
     author_email="martgra@gmail.com",
     description="A Fantasy premier league package",

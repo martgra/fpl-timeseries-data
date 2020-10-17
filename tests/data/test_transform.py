@@ -1,4 +1,5 @@
-from fpl.data.transformations import create_opponents, get_team_opponents
+from fpl import data
+from fpl.data.transformations import add_team_name, create_opponents, get_team_opponents
 
 
 def test_create_opponents(teams_fixtures, data_object):
@@ -46,3 +47,10 @@ def test_get_team_opponents(teams_fixtures, data_object):
     assert fixtures["has_double_gw"] is False
     assert fixtures["in_gameweeks"][1] == 0
     assert len(fixtures["in_gameweeks"]) == 5
+
+
+def test_add_team_name(data_object):
+    add_team_name(data_object["elements"], data_object["teams"])
+    team = {i["id"]: i["name"] for i in data_object["teams"]}
+    for i in data_object["elements"]:
+        assert i["team_name"] == team[i["team"]]

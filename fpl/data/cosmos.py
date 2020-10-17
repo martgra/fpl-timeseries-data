@@ -236,7 +236,7 @@ class CosmoContainer(ABC):
         Args:
             documents (list[dict]): List holding dicts containing at least {"id": str}
         """
-        for document in documents:
+        for document in tqdm(documents, desc="Updating Cosmos"):
             self.container.upsert_item(document)
 
 
