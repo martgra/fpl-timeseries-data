@@ -24,14 +24,14 @@ def test_get_team_opponents(teams_fixtures, data_object):
     teams_events = create_opponents(
         data_object["teams"], fixtures_uri="https://fantasy.premierleague.com/api/mock/", sort=True
     )
-    fixtures = get_team_opponents(teams_events, "Man City", 1, 5)
+    fixtures = get_team_opponents(teams_events, "Man City", 0, 5)
     assert len(fixtures["opponents"]) == 5
     assert fixtures["postponed"] is True
     assert fixtures["has_double_gw"] is False
     assert fixtures["in_gameweeks"][1] == 0
     assert len(fixtures["in_gameweeks"]) == 5
 
-    fixtures = get_team_opponents(teams_events, "Liverpool", 1, 40)
+    fixtures = get_team_opponents(teams_events, "Liverpool", 0, 40)
     assert len(fixtures["opponents"]) == 38
     assert fixtures["postponed"] is False
     assert fixtures["has_double_gw"] is False
@@ -41,7 +41,7 @@ def test_get_team_opponents(teams_fixtures, data_object):
     teams_events = create_opponents(
         data_object["teams"], fixtures_uri="https://fantasy.premierleague.com/api/mock/"
     )
-    fixtures = get_team_opponents(teams_events, "Man City", 1, 5)
+    fixtures = get_team_opponents(teams_events, "Man City", 0, 5)
     assert len(fixtures["opponents"]) == 5
     assert fixtures["postponed"] is True
     assert fixtures["has_double_gw"] is False
