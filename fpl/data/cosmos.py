@@ -272,4 +272,8 @@ if __name__ == "__main__":
         os.getenv("AZURE_COSMOS_TOKEN"),
         {"database": "fplstats", "container": "elements", "partition_key": "download_time"},
     )
-    test_client.insert_documents("/home/jason/dev/fpl2021/data", latest=True)
+    elements = test_client.search_db()
+    data = io.load_json("/home/jason/dev/fpl2021/data/2020-09-12T08-24-34Z_data.json")
+    all_fixtures = transformations.create_opponents(data["teams"])
+    transformations.add_opponents(elements, all_fixtures)
+    test_client.update_all(elements)

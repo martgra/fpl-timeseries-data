@@ -1,7 +1,10 @@
 """Common transformation."""
 import hashlib
+import json
 
 import requests
+
+from fpl.data.io import load_json
 
 
 def get_game_week(events: list) -> int:
@@ -139,13 +142,14 @@ def get_team_opponents(all_teams: list, team_name: str, from_gameweek=1, number_
         "has_double_gw": boolean,
     }
     """
-    team_fixtures = all_teams[team_name][from_gameweek - 1 : from_gameweek - 1 + number_fixtures]
+    team_fixtures = all_teams[team_name][from_gameweek : from_gameweek + number_fixtures]
     if from_gameweek + number_fixtures > 1 + len(all_teams[team_name]):
         number_fixtures = len(all_teams[team_name]) + 1 - from_gameweek
 
     gameweeks = [i["gameweek"] for i in team_fixtures]
     gameweeks = {
-        i: gameweeks.count(i) for i in range(from_gameweek, from_gameweek + number_fixtures, 1)
+        i: gameweeks.count(i)
+        for i in range(from_gameweek + 1, from_gameweek + 1 + number_fixtures, 1)
     }
     return {
         "opponents": team_fixtures,
@@ -155,5 +159,47 @@ def get_team_opponents(all_teams: list, team_name: str, from_gameweek=1, number_
     }
 
 
-def add_fixtures(elements: list, all_teams: list):
-    list(map(lambda x: get_team_opponents(all_teams, x["team"]), elements))
+def _add_next_five(element: dict, all_teams: list):
+    data = get_team_opponents(all_teams, element["team_name"], element["gameweek"], 5)
+    opponents_extracted = {}
+    for i, y in enumerate(data["opponents"]):
+        if y["gameweek"]:
+            opponents_extracted.update(
+                {
+                    "n+{}_opponent".format(i): y["team"],
+                    "n+{}_difficulty".format(i): y["difficulty"],
+                    "n+{}_venue".format(i): y["venue"],
+                    "n+{}_gw".format(i): y["gameweek"],
+                }
+            )
+        else:
+            opponents_extracted.update(
+                {
+                    "n+{}_opponent".format(i): None,
+                    "n+{}_difficulty".format(i): None,
+                    "n+{}_venue".format(i): None,
+                    "n+{}_gw".format(i): element["gameweek"] + i,
+                }
+            )
+
+    element.update(opponents_extracted)
+    del data["opponents"]
+    del data["in_gameweeks"]
+    element.update(data)
+
+
+def add_opponents(elements: list, all_teams: list):
+    list(map(lambda x: _add_next_five(x, all_teams), elements))
+
+
+# def add_fixtures(elements: list, all_teams: list):
+
+if __name__ == "__main__":
+    data = load_json("/home/jason/dev/fpl2021/data/2020-09-12T08-24-34Z_data.json")
+    all_teams = create_opponents(data["teams"])
+    gw = get_game_week(data["events"])
+    add_gw_and_download_time(data["elements"], data["download_time"], gw)
+
+    add_team_name(data["elements"], data["teams"])
+    add_opponents(data["elements"], all_teams)
+    print(json.dumps(data["elements"][300], indent=4))
