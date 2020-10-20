@@ -9,14 +9,17 @@ from fpl.data.azure_storage import AzureStorage
 
 @click.group(help="Procedures to download data from Azure Blob Storage")
 @click.option("--connection-string", "-c", type=str, default=None)
+@click.option("--container-name", "-n", type=str, default="fplstats")
 @click.pass_context
-def storage(ctx, connection_string):
+def storage(ctx, connection_string, container_name):
     """Download group."""
     try:
         if connection_string:
-            storage_client = AzureStorage(connection_string, "fplstats")
+            storage_client = AzureStorage(connection_string, container_name)
         else:
-            storage_client = AzureStorage(os.getenv("AZURE_STORAGE_CONNECTION_STRING"), "fplstats")
+            storage_client = AzureStorage(
+                os.getenv("AZURE_STORAGE_CONNECTION_STRING"), container_name
+            )
         ctx.obj = storage_client
     except TypeError:
         print("ERROR IN CONNECTION STRING")
