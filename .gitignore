@@ -132,5 +132,6 @@ data/*.json
 data_backup/*
 
 .vscode
+/notebooks/*.json
 /notebooks/exported/*
 !notebooks/exported/.gitkeep
