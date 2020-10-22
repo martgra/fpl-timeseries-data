@@ -9,15 +9,29 @@ from fpl.data.cosmos import ElementsInserter
 
 
 @click.group(help="Procedures to interact with Azure Cosmos DB", name="cosmos")
+@click.option("--uri", "-u", type=str, default=None)
+@click.option("--token", "-t", type=str, default=None)
 @click.pass_context
-def cosmos_cli(ctx):
+def cosmos_cli(ctx, uri, token):
     """Download group."""
-    db_client = ElementsInserter(
-        os.getenv("AZURE_COSMOS_URI"),
-        os.getenv("AZURE_COSMOS_TOKEN"),
-        {"database": "fplstats", "container": "elements", "partition_key": "download_time"},
-    )
-    ctx.obj = db_client
+    common = {"database": "fplstats", "container": "elements", "partition_key": "download_time"}
+    try:
+        if uri and token:
+            db_client = ElementsInserter(
+                uri,
+                token,
+                common,
+            )
+        else:
+            db_client = ElementsInserter(
+                os.getenv("AZURE_COSMOS_URI"),
+                os.getenv("AZURE_COSMOS_TOKEN"),
+                common,
+            )
+        ctx.obj = db_client
+    except TypeError:
+        ctx.obj = None
+        print("ERROR IN CREDENTIALS")
 
 
 @cosmos_cli.command(name="dump")
