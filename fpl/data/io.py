@@ -18,8 +18,8 @@ def load_json(file_path: str) -> dict:
     with open(Path(file_path)) as json_file:
         try:
             return json.load(json_file)
-        except json.decoder.JSONDecodeError:
-            print("Unable to decode json")
+        except json.decoder.JSONDecodeError as error:
+            print("Unable to decode JSON. {}".format(error))
 
 
 def dump_json(file_path: str, data: dict):
@@ -46,10 +46,8 @@ def load_dataframe_from_json(file_path: str, object_to_grab: str) -> object:
     json_object = load_json(file_path)
     try:
         return pd.DataFrame(json_object[str(object_to_grab)])
-    except KeyError:
-        print("Key not found")
-    except Exception:
-        print("Could not load dataframe")
+    except KeyError as error:
+        print("Unable to load dataframe. No key: {}".format(error))
 
 
 def list_data_dir(dir_path: str, suffix=".json") -> list:
@@ -76,18 +74,18 @@ def get_description_dict(dataframe: pd.DataFrame) -> dict:
     """
     return {
         i: {
-            "change": "None",
-            "description": "None",
+            "change": None,
+            "description": None,
             "notes": {
-                "personal_notes": "None",
-                "official_explanation": "None",
-                "referance": "None",
+                "personal_notes": None,
+                "official_explanation": None,
+                "referance": None,
             },
-            "data_type": "None",
-            "type": "None",
-            "calculated": "cumulative_sum",
+            "data_type": None,
+            "type": y.name,
+            "calculated": None,
         }
-        for i in dataframe.columns
+        for i, y in zip(dataframe.columns, dataframe.dtypes)
     }
 
 

@@ -202,7 +202,3 @@ def add_opponents(elements: list, all_teams: list):
         all_teams (list): List holding teams
     """
     list(map(lambda x: _add_next_five(x, all_teams), elements))
-
-
-if __name__ == "__main__":
-    pass
