@@ -99,5 +99,5 @@ def fix_encoding(data_dir_path: str):
         with open(Path(i), "rb") as file:
             json_file = json.load(file)
 
-        with open(Path("i"), "w") as file:
+        with open(Path(i), "w") as file:
             json.dump(json_file, file, ensure_ascii=False, indent=4)
