@@ -6,3 +6,6 @@ pytest
 pydocstyle
 requests-mock
 coverage
+seaborn
+notebook
+jupytext

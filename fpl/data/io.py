@@ -4,6 +4,9 @@ import os
 from pathlib import Path
 
 import pandas as pd
+from tqdm import tqdm
+
+from fpl.data.transformations import get_game_week, add_gw_and_download_time, add_unique_id
 
 
 def load_json(file_path: str) -> dict:
@@ -101,3 +104,22 @@ def fix_encoding(data_dir_path: str):
 
         with open(Path(i), "w") as file:
             json.dump(json_file, file, ensure_ascii=False, indent=4)
+
+def to_csv(data_path="data", save_path="data_transformed.csv"):
+    """Transform data and save as CSV.
+
+    Args:
+        data_path (str, optional): Path to dir holding JSON dumps. Defaults to "data".
+        save_path (str, optional): Path to save transformed CSV. Defaults to "data_transformed.csv".
+    """        
+    df = pd.DataFrame()
+
+    for data in tqdm(list_data_dir(data_path)):
+        data = load_json(data)
+        add_gw_and_download_time(data["elements"], data["download_time"],  get_game_week(data["events"]))
+        add_unique_id(data["elements"])
+        
+        # Add transformations here
+        
+        df = df.append(pd.DataFrame(data["elements"]))    
+    df.to_csv("data.csv")

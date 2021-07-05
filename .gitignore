@@ -135,3 +135,6 @@ data_backup/*
 .vscode
 /notebooks/exported/*
 !notebooks/exported/.gitkeep
+
+
+/*.csv

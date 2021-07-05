@@ -17,10 +17,8 @@ def get_game_week(events: list) -> int:
         int: Current gameweek
     """
     gw = list(filter(lambda x: x["is_current"] is True, events))
-    if gw:
-        return gw[0]["id"]
-    return 0
 
+    return gw[0]["id"] if gw else 0
 
 def create_id(element: dict) -> str:
     """Create a unique element id.
