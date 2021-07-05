@@ -5,7 +5,7 @@ import os
 import click
 
 from fpl.data.azure_storage import AzureStorage
-from fpl.data.io import to_csv
+from fpl.data.transformations import to_csv
 
 @click.group(help="Procedures to download data from Azure Blob Storage")
 @click.option("--connection-string", "-c", type=str, default=None)

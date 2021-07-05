@@ -4,9 +4,6 @@ import os
 from pathlib import Path
 
 import pandas as pd
-from tqdm import tqdm
-
-
 
 def load_json(file_path: str) -> dict:
     """Load json file.

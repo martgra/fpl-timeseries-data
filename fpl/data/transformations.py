@@ -210,7 +210,7 @@ def to_csv(data_path="data", save_path="data_transformed.csv"):
         data_path (str, optional): Path to dir holding JSON dumps. Defaults to "data".
         save_path (str, optional): Path to save transformed CSV. Defaults to "data_transformed.csv".
     """        
-    df = pd.DataFrame()
+    dataframe = pd.DataFrame()
 
     for data in tqdm(list_data_dir(data_path)):
         data = load_json(data)
@@ -219,5 +219,5 @@ def to_csv(data_path="data", save_path="data_transformed.csv"):
         
         # Add transformations here
         
-        df = df.append(pd.DataFrame(data["elements"]))    
-    df.to_csv("data.csv")
+        dataframe = dataframe.append(pd.DataFrame(data["elements"]))    
+    dataframe.to_csv("data.csv")
