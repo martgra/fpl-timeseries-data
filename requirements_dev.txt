@@ -4,3 +4,6 @@ pylint
 flake8
 pytest
 pydocstyle
+seaborn
+notebook
+jupytext
