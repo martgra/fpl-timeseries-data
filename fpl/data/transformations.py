@@ -1,7 +1,7 @@
 """Common transformation."""
 import hashlib
-import json
 import pandas as pd
+from tqdm import tqdm
 
 import requests
 
