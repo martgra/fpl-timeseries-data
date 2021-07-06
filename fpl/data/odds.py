@@ -21,12 +21,7 @@ def get_odds(market="h2h", uri="https://api.the-odds-api.com/v3/odds", api_key=N
     download_time = str(datetime.datetime.now())
     odds_response = requests.get(
         uri,
-        params={
-            "api_key": api_key,
-            "sport": "soccer_epl",
-            "region": "uk",
-            "mkt": market,  # totals
-        },
+        params={"api_key": api_key, "sport": "soccer_epl", "region": "uk", "mkt": market},  # totals
     )
     odds = json.loads(odds_response.text)
     odds["download_time"] = download_time

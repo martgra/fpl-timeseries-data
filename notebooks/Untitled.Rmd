@@ -13,7 +13,7 @@ jupyter:
 ---
 
 ```{python}
-# Nødvendige importer og setup for å komme i gang. 
+# Nødvendige importer og setup for å komme i gang.
 
 import requests
 import pandas as pd
@@ -29,7 +29,7 @@ pd.set_option('display.max_columns', 100)
 
 ```{python}
 url = "https://fantasy.premierleague.com/api/fixtures/"
-fpl_json = requests.get(url).json() 
+fpl_json = requests.get(url).json()
 fpl_json
 
 

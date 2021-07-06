@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
+
 def load_json(file_path: str) -> dict:
     """Load json file.
 
@@ -75,11 +76,7 @@ def get_description_dict(dataframe: pd.DataFrame) -> dict:
         i: {
             "change": None,
             "description": None,
-            "notes": {
-                "personal_notes": None,
-                "official_explanation": None,
-                "referance": None,
-            },
+            "notes": {"personal_notes": None, "official_explanation": None, "referance": None},
             "data_type": None,
             "type": y.name,
             "calculated": None,
@@ -100,4 +97,3 @@ def fix_encoding(data_dir_path: str):
 
         with open(Path(i), "w") as file:
             json.dump(json_file, file, ensure_ascii=False, indent=4)
-
