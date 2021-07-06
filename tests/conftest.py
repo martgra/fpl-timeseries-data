@@ -66,17 +66,20 @@ def teams_fixtures(requests_mock, fixtures_object):
 @pytest.fixture
 def cosmos_client():
     load_dotenv()
-    cosmos_client = ElementsInserter(
-        os.getenv("AZURE_COSMOS_URI"),
-        os.getenv(
-            "AZURE_COSMOS_TOKEN",
-        ),
-        database_meta={
-            "database": "fplstats",
-            "container": "test_elements",
-            "partition_key": "id",
-        },
-    )
-    yield cosmos_client
-    clean = cosmos_client.search_db(query="SELECT c.id from c")
-    cosmos_client.delete_items(clean)
+    try:
+        cosmos_client = ElementsInserter(
+            os.getenv("AZURE_COSMOS_URI"),
+            os.getenv(
+                "AZURE_COSMOS_TOKEN",
+            ),
+            database_meta={
+                "database": "fplstats",
+                "container": "test_elements",
+                "partition_key": "id",
+            },
+        )
+        yield cosmos_client
+        clean = cosmos_client.search_db(query="SELECT c.id from c")
+        cosmos_client.delete_items(clean)
+    except TypeError:
+        pytest.skip("No COSMOSDB configured")

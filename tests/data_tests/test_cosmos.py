@@ -1,5 +1,6 @@
 from sys import dont_write_bytecode
 
+import pytest
 from azure.cosmos import ContainerProxy, CosmosClient, DatabaseProxy
 
 from fpl.data.cosmos import ElementsInserter
