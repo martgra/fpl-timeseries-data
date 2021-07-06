@@ -21,6 +21,7 @@ def get_game_week(events: list) -> int:
 
     return gw[0]["id"] if gw else 0
 
+
 def create_id(element: dict) -> str:
     """Create a unique element id.
 
@@ -209,15 +210,17 @@ def to_csv(data_path="data", save_path="data_transformed.csv"):
     Args:
         data_path (str, optional): Path to dir holding JSON dumps. Defaults to "data".
         save_path (str, optional): Path to save transformed CSV. Defaults to "data_transformed.csv".
-    """        
+    """
     dataframe = pd.DataFrame()
 
     for data in tqdm(list_data_dir(data_path)):
         data = load_json(data)
-        add_gw_and_download_time(data["elements"], data["download_time"],  get_game_week(data["events"]))
+        add_gw_and_download_time(
+            data["elements"], data["download_time"], get_game_week(data["events"])
+        )
         add_unique_id(data["elements"])
-        
+
         # Add transformations here
-        
-        dataframe = dataframe.append(pd.DataFrame(data["elements"]))    
+
+        dataframe = dataframe.append(pd.DataFrame(data["elements"]))
     dataframe.to_csv("data.csv")
