@@ -11,7 +11,8 @@ def make_race_bar_data(
     Args:
         data (pd.DataFrame): DataFrame holding time series for race bar chart
         index (str): Index used for naming the bars. Defaults to "web_name".
-        columns (str): Should be the temporal value. Usually "download_time". Defaults to "download_time".
+        columns (str): Should be the temporal value. Usually "download_time".
+            Defaults to "download_time".
         values (str): Name of column holding the value. Defaults to "diff".
 
     Returns:

@@ -39,6 +39,7 @@ DATA_FOLDER = Path("exported")
 data = cosmos.search_db("SELECT c.web_name, c.team, c.selected_by_percent, c.cost_change_start, c.download_time, (c.transfers_in - c.transfers_out) AS diff from c")
 print(len(data))
 df = pd.DataFrame(data)
+
 ```
 
 ```{python}
@@ -47,6 +48,7 @@ df = pd.DataFrame(data)
 net_transfers = df [["web_name","download_time","diff"]]
 net_transfers = make_race_bar_data(net_transfers)
 net_transfers.to_csv(Path(DATA_FOLDER, "net_transfer.csv"))
+df.tail()
 ```
 
 ```{python}

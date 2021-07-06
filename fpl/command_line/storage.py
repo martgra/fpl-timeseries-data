@@ -5,18 +5,22 @@ import os
 import click
 
 from fpl.data.azure_storage import AzureStorage
+from fpl.data.transformations import to_csv
 
 
 @click.group(help="Procedures to download data from Azure Blob Storage")
 @click.option("--connection-string", "-c", type=str, default=None)
+@click.option("--container-name", "-n", type=str, default="fplstats")
 @click.pass_context
-def storage(ctx, connection_string):
+def storage(ctx, connection_string, container_name):
     """Download group."""
     try:
         if connection_string:
-            storage_client = AzureStorage(connection_string, "fplstats")
+            storage_client = AzureStorage(connection_string, container_name)
         else:
-            storage_client = AzureStorage(os.getenv("AZURE_STORAGE_CONNECTION_STRING"), "fplstats")
+            storage_client = AzureStorage(
+                os.getenv("AZURE_STORAGE_CONNECTION_STRING"), container_name
+            )
         ctx.obj = storage_client
     except TypeError:
         print("ERROR IN CONNECTION STRING")
@@ -62,3 +66,17 @@ def list_storage(storage_client):
     """List blobs in Azure Storage."""
     for blob in storage_client.blobs_list(as_list=True):
         print(blob)
+
+
+@storage.command(name="to-csv", help="Transform JSON files in /data and save as CSV")
+@click.option(
+    "--data-dir",
+    "-d",
+    type=click.Path(exists=True),
+    help="Path to directory that holds JSON",
+    default="data",
+)
+@click.option("--save", "-s", type=str, help="Path to save CSV", default="transformation.csv")
+def json_to_csv(data_dir, save):
+    """Transform all JSON in dir and save as CSV."""
+    to_csv(data_dir, save)
