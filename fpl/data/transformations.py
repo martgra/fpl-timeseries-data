@@ -1,11 +1,11 @@
 """Common transformation."""
 import hashlib
+
 import pandas as pd
+import requests
 from tqdm import tqdm
 
-import requests
-
-from fpl.data.io import load_json, list_data_dir
+from fpl.data.io import list_data_dir, load_json
 
 
 def get_game_week(events: list) -> int:
@@ -204,14 +204,14 @@ def add_opponents(elements: list, all_teams: list):
     list(map(lambda x: _add_next_five(x, all_teams), elements))
 
 
-def to_csv(data_path="data", save_path="data_transformed.csv"):
+def to_csv(data_path="data"):
     """Transform data and save as CSV.
 
     Args:
         data_path (str, optional): Path to dir holding JSON dumps. Defaults to "data".
         save_path (str, optional): Path to save transformed CSV. Defaults to "data_transformed.csv".
     """
-    dataframe = pd.DataFrame()
+    elements = []
 
     for data in tqdm(list_data_dir(data_path)):
         data = load_json(data)
@@ -219,8 +219,8 @@ def to_csv(data_path="data", save_path="data_transformed.csv"):
             data["elements"], data["download_time"], get_game_week(data["events"])
         )
         add_unique_id(data["elements"])
+        elements.extend(data["elements"])
 
         # Add transformations here
 
-        dataframe = dataframe.append(pd.DataFrame(data["elements"]))
-    dataframe.to_csv("data.csv")
+    return pd.DataFrame(elements)

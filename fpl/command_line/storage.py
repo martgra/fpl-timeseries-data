@@ -35,7 +35,7 @@ def storage(ctx, connection_string, container):
     "--data-dir",
     "-d",
     type=click.Path(),
-    default=lambda: Path("data", click.get_current_context().parent.params["container"]),
+    default=lambda: Path("data", "raw", click.get_current_context().parent.params["container"]),
     help="Path to dir to store blobs",
 )
 @click.option(
@@ -79,9 +79,17 @@ def list_storage(storage_client):
     "-d",
     type=click.Path(exists=True),
     help="Path to directory that holds JSON",
-    default="data",
+    default=lambda: Path("data", click.get_current_context().parent.params["container"]),
 )
-@click.option("--save", "-s", type=str, help="Path to save CSV", default="transformation.csv")
+@click.option(
+    "--save",
+    "-s",
+    type=click.Path(),
+    help="Path to save CSV",
+    default="data/transformed/transformed.csv",
+)
 def json_to_csv(data_dir, save):
     """Transform all JSON in dir and save as CSV."""
-    to_csv(data_dir, save)
+    csv_data = to_csv(data_dir)
+    Path(save).parent.mkdir(exist_ok=True, parents=True)
+    csv_data.to_csv(save)
