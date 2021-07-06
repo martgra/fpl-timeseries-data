@@ -1,25 +1,29 @@
 """CLI Storage module."""
 
 import os
+from pathlib import Path
 
 import click
 
 from fpl.data.azure_storage import AzureStorage
 from fpl.data.transformations import to_csv
 
+DEFAULT_STORAGE_ACCOUNT = "https://martinfplstats1337.blob.core.windows.net"
+DEFAULT_CONTAINER = "2020-fpl-data"
+
 
 @click.group(help="Procedures to download data from Azure Blob Storage")
 @click.option("--connection-string", "-c", type=str, default=None)
-@click.option("--container-name", "-n", type=str, default="fplstats")
+@click.option("--container", type=str, default=DEFAULT_CONTAINER)
 @click.pass_context
-def storage(ctx, connection_string, container_name):
+def storage(ctx, connection_string, container):
     """Download group."""
     try:
         if connection_string:
-            storage_client = AzureStorage(connection_string, container_name)
+            storage_client = AzureStorage(connection_string, container)
         else:
             storage_client = AzureStorage(
-                os.getenv("AZURE_STORAGE_CONNECTION_STRING"), container_name
+                os.getenv("AZURE_STORAGE_CONNECTION_STRING") or DEFAULT_STORAGE_ACCOUNT, container
             )
         ctx.obj = storage_client
     except TypeError:
@@ -30,8 +34,8 @@ def storage(ctx, connection_string, container_name):
 @click.option(
     "--data-dir",
     "-d",
-    type=click.Path(exists=True),
-    default="data",
+    type=click.Path(),
+    default=lambda: Path("data", click.get_current_context().parent.params["container"]),
     help="Path to dir to store blobs",
 )
 @click.option(
@@ -43,6 +47,7 @@ def storage(ctx, connection_string, container_name):
 @click.pass_obj
 def download_bulk(storage_client, data_dir, download_all):
     """Download many blobs to local storage."""
+    data_dir.mkdir(exist_ok=True, parents=True)
     if download_all:
         storage_client.download_blobs(download_dir_path=data_dir)
     else:
