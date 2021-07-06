@@ -53,7 +53,7 @@ def transformed_data_object(data_object):
 
 @pytest.fixture
 def fixtures_object():
-    with open(Path("tests/data/fixtures_mock.json")) as test_data:
+    with open(Path("tests/data_tests/fixtures_mock.json")) as test_data:
         test_data = json.load(test_data)
     return test_data
 
