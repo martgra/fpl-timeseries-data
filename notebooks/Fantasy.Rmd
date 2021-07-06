@@ -13,21 +13,21 @@ jupyter:
 ---
 
 <!-- #region -->
-# Fantasy Premier League 2020/2021 
-Basert på følgende tutorial:  
+# Fantasy Premier League 2020/2021
+Basert på følgende tutorial:
 https://towardsdatascience.com/fantasy-premier-league-value-analysis-python-tutorial-using-the-fpl-api-8031edfe9910
 
 
 ## Oppsett
 
-Vi importerer nødvendige biblioteker   
+Vi importerer nødvendige biblioteker
 * requests for å laste ned datasettet - https://requests.readthedocs.io/en/master/
 * pandas for å behandle data - https://pandas.pydata.org/docs/
 * numpy for å behandle data - https://numpy.org/doc/stable/
 
 
-Datasettet fra Fantasy finnes på følgende link.  
-https://fantasy.premierleague.com/api/bootstrap-static/   
+Datasettet fra Fantasy finnes på følgende link.
+https://fantasy.premierleague.com/api/bootstrap-static/
 
 #### API - andre nyttige metoder
 * Kampprogram: https://fantasy.premierleague.com/api/fixtures/
@@ -38,20 +38,20 @@ https://fantasy.premierleague.com/api/bootstrap-static/
 * Siste transfers: https://fantasy.premierleague.com/api/entry/{team-id}/transfers-latest/
 * My Team https://fantasy.premierleague.com/api/my-team/{team-id}/ *
 
-*For å bruke "my team api" er autentikasjon påkrevd se link  
+*For å bruke "my team api" er autentikasjon påkrevd se link
 https://medium.com/@bram.vanherle1/fantasy-premier-league-api-authentication-guide-2f7aeb2382e4)
 
 #### Andre nyttige lenker
-* Reddit-tråd om FPL API  
+* Reddit-tråd om FPL API
 https://www.reddit.com/r/FantasyPL/comments/c64rrx/fpl_api_url_has_been_changed/
-* Blogpost om FPL API (her må man bytte ut drf med api)  
+* Blogpost om FPL API (her må man bytte ut drf med api)
 https://medium.com/@YourMumSaysWhat/how-to-get-data-from-the-fantasy-premier-league-api-4477d6a334c3
-* Historiske data for FPL  
+* Historiske data for FPL
 https://github.com/vaastav/Fantasy-Premier-League
 <!-- #endregion -->
 
 ```{python}
-# Nødvendige importer og setup for å komme i gang. 
+# Nødvendige importer og setup for å komme i gang.
 
 import requests
 import pandas as pd
@@ -71,7 +71,7 @@ pd.set_option('display.max_columns', 100)
 
 ### Datasettet lastes ned
 
-Dette endrer seg og det vil være nødvendig å laste ned ganske ofte. Her må hver enkelt finne ut hvordan man ønsker å bruke, og kombinere data. 
+Dette endrer seg og det vil være nødvendig å laste ned ganske ofte. Her må hver enkelt finne ut hvordan man ønsker å bruke, og kombinere data.
 
 ```{python}
 # Laster ned datasett som json
@@ -83,7 +83,7 @@ if os.path.isfile("{}_fpl_datadump.json".format(datetime.today().date())):
     with open("{}_fpl_datadump.json".format(datetime.today().date())) as json_file:
         fpl_json = json.load(json_file)
 else:
-    fpl_json = requests.get(url).json() 
+    fpl_json = requests.get(url).json()
     fpl_json["download_time"]= str(datetime.now())
     # dump dataset to local host
     with open("{}_fpl_datadump.json".format(datetime.today().date()), "w") as f:

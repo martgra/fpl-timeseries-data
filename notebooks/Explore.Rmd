@@ -43,7 +43,7 @@ data_list = io.list_data_dir("../data")
 
 ```{python}
 # Get all data currently available from data dir
-elements = [xp.reorder_elements(io.load_dataframe_from_json(i, "elements")) for i in data_list] 
+elements = [xp.reorder_elements(io.load_dataframe_from_json(i, "elements")) for i in data_list]
 ```
 
 ```{python}
@@ -76,15 +76,15 @@ display(temp.loc[temp["creativity_rank_type"] != ""])
 
 ```{python}
 # Get all data currently available from data dir
-elements = [io.load_dataframe_from_json(i, "events") for i in data_list] 
+elements = [io.load_dataframe_from_json(i, "events") for i in data_list]
 for i in data_list:
     print(i)
 ```
 
 ```{python}
-events = [io.load_dataframe_from_json(i, "events") for i in data_list] 
-teams = [io.load_dataframe_from_json(i, "events") for i in data_list] 
-elements = [xp.reorder_elements(io.load_dataframe_from_json(i, "elements")) for i in data_list] 
+events = [io.load_dataframe_from_json(i, "events") for i in data_list]
+teams = [io.load_dataframe_from_json(i, "events") for i in data_list]
+elements = [xp.reorder_elements(io.load_dataframe_from_json(i, "elements")) for i in data_list]
 events[-1].head()
 
 elements[-1].loc[elements[-1]["web_name"] == "Fernandes"]

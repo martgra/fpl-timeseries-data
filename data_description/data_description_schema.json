@@ -5,13 +5,13 @@
     "description": "A product from Acme's catalog",
     "type": "object",
     "properties": {
-        "elements": { 
+        "elements": {
             "type": "object",
             "patternProperties": {
             ".+": { "$ref": "#/definitions/element_property" }
         }
     },
-    "teams": { 
+    "teams": {
         "type": "object",
         "patternProperties": {
         ".+": { "$ref": "#/definitions/element_property" }
@@ -36,7 +36,7 @@
                     "description": "Extensive explanation of interpertation of data",
                     "type": "object",
                     "properties": {
-                        "personal_notes": { 
+                        "personal_notes": {
                             "type":"string",
                             "description": "Personal notes regarding data"
                         },
@@ -47,8 +47,8 @@
                             "type": "string",
                             "description": "url",
                             "format": "uri"
-                        } 
-                        
+                        }
+
                     }
                 },
                 "data_type": {

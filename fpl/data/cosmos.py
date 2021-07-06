@@ -67,7 +67,7 @@ class CosmoContainer(ABC):
         return dict_list
 
     @staticmethod
-    def _get_data(data_dir_path: str) -> list:
+    def __get_data(data_dir_path: str) -> list:
         """Load list of .json files to list of dicts.
 
         Args:
@@ -83,7 +83,7 @@ class CosmoContainer(ABC):
         return dict_list
 
     @staticmethod
-    def _get_index(dict_list: list, latest_id: str) -> int:
+    def __get_index(dict_list: list, latest_id: str) -> int:
         """Get index of dict with document["id].
 
         Args:
@@ -94,9 +94,15 @@ class CosmoContainer(ABC):
             int: Index of latest inserted document compared to local data
         """
         if latest_id not in [i["id"] for i in dict_list]:
-            print("Cosmos DB ahead of local data")
-            return len(dict_list)
+            return len(dict_list) + 1
         return next((index for (index, d) in enumerate(dict_list) if d["id"] == latest_id), None)
+
+    def __get_last_insert(self) -> str:
+        query = "SELECT TOP 1 * FROM c ORDER BY c._ts DESC"
+        result = list(self.container.query_items(query=query, enable_cross_partition_query=True))
+        if result:
+            return result[0]["id"]
+        return None
 
     def insert_documents(self, data_dir_path: str, latest=True):
         """Migrate local documents to Cosmos DB.
@@ -106,21 +112,26 @@ class CosmoContainer(ABC):
             latest (bool, optional): Indicates if all data are to be migrated,
                 or just from latest inserted document. Defaults to True.
         """
-        dict_list = self._get_data(data_dir_path)
+        dict_list = self.__get_data(data_dir_path)
         transformed_data_list = self._transform_data(dict_list)
 
         if latest:
-            latest_insert = transformed_data_list, self._get_last_insert()
+            latest_insert = self.__get_last_insert()
             if latest_insert:
-                latest_index = self._get_index(transformed_data_list, self._get_last_insert())
+                latest_index = self.__get_index(transformed_data_list, self.__get_last_insert())
                 if latest_index == len(transformed_data_list) - 1:
                     print("Local data and Cosmos DB in sync")
-                    sys.exit(0)
-                else:
+                    return
+                elif latest_index < len(transformed_data_list) - 1:
                     print(
-                        "Migrating from index{}:{}".format(latest_index, len(transformed_data_list))
+                        "Migrating from index {}:{}".format(
+                            latest_index, len(transformed_data_list) - 1
+                        )
                     )
                     transformed_data_list = transformed_data_list[latest_index + 1 :]
+                elif latest_index > len(transformed_data_list) - 1:
+                    print("Cosmos DB ahead of local data.")
+                    return
             else:
                 print(
                     "No data in container, migrating all {} "
@@ -149,15 +160,8 @@ class CosmoContainer(ABC):
         Returns:
             List[dict]: List of transformed documents
         """
-        dict_list = self._get_data(data_dir_path)
+        dict_list = self.__get_data(data_dir_path)
         return self._transform_data(dict_list[0])[:num_of_samples]
-
-    def _get_last_insert(self) -> str:
-        query = "SELECT TOP 1 * FROM c ORDER BY c._ts DESC"
-        result = list(self.container.query_items(query=query, enable_cross_partition_query=True))
-        if result:
-            return result[0]["id"]
-        return None
 
     def search_db(self, query="SELECT * from c") -> list:
         """Search collectiong using SQL syntax.
@@ -170,7 +174,7 @@ class CosmoContainer(ABC):
         """
         return list(
             self.container.query_items(
-                query=query, enable_cross_partition_query=True, max_item_count=40000
+                query=query, enable_cross_partition_query=True, max_item_count=-1
             )
         )
 
@@ -181,7 +185,12 @@ class CosmoContainer(ABC):
             str: timestamp in format: yyyy-MM-ddTHH:mm:ss.fffffffZ
         """
         get_latest_download = "SELECT VALUE MAX(c.download_time) from c"
-        return self.search_db(get_latest_download)[0]
+        print(get_latest_download)
+        try:
+            print(self.search_db(get_latest_download))
+            return self.search_db(get_latest_download)[0]
+        except IndexError:
+            print("database empty")
 
     def get_latest_download(self) -> list:
         """Get latest download.
@@ -236,8 +245,13 @@ class CosmoContainer(ABC):
         Args:
             documents (list[dict]): List holding dicts containing at least {"id": str}
         """
-        for document in documents:
+        for document in tqdm(documents, desc="Updating Cosmos"):
             self.container.upsert_item(document)
+
+    def delete_items(self, items: list):
+        for item in items:
+            print("Deleting {}".format(item["id"]))
+            self.container.delete_item(item=item["id"], partition_key=item["id"])
 
 
 class ElementsInserter(CosmoContainer):
@@ -252,8 +266,6 @@ class ElementsInserter(CosmoContainer):
 
         Args:
             dict_list (list[dict]): List holding raw dicts from loaded .json files downloaded
-            from Azure Storage.
-
         Returns:
             list[dict]: list of documents ready to be inserted to Cosmos
         """
@@ -272,4 +284,4 @@ if __name__ == "__main__":
         os.getenv("AZURE_COSMOS_TOKEN"),
         {"database": "fplstats", "container": "elements", "partition_key": "download_time"},
     )
-    test_client.insert_documents("/home/jason/dev/fpl2021/data", latest=True)
+    print(len(test_client.search_db(query="SELECT c.id from c")))
