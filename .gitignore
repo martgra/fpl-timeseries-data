@@ -128,9 +128,13 @@ notebooks/*.ipynb
 # Pyre type checker
 .pyre/
 data/*.json
+data
 
 data_backup/*
 
 .vscode
 /notebooks/exported/*
 !notebooks/exported/.gitkeep
+
+
+/*.csv
