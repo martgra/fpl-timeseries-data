@@ -9,3 +9,5 @@ coverage
 seaborn
 notebook
 jupytext
+isort
+jupyter_nbextensions_configurator
