@@ -4,10 +4,10 @@ jupyter:
     text_representation:
       extension: .md
       format_name: markdown
-      format_version: '1.3'
-      jupytext_version: 1.11.3
+      format_version: '1.2'
+      jupytext_version: 1.6.0
   kernelspec:
-    display_name: Python 3 (ipykernel)
+    display_name: Python 3
     language: python
     name: python3
 ---
@@ -87,8 +87,4 @@ DF_2020 = to_csv(DATA_DIR_2020)
 DF_2021 = to_csv(DATA_DIR_2021)
 DF_2020.to_csv("../data/transformed/2020_transformed.csv", index=False)
 DF_2021.to_csv("../data/transformed/2021_transformed.csv", index=False)
-```
-
-```python
-
 ```
