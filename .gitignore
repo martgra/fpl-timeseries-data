@@ -127,8 +127,8 @@ dmypy.json
 notebooks/*.ipynb
 # Pyre type checker
 .pyre/
-data/*.json
-data
+data/**/*.json
+data/**/*.csv
 
 data_backup/*
 

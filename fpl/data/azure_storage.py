@@ -37,7 +37,9 @@ class AzureStorage:
             # self.storage_client.get_service_stats()
         except:
             self.storage_client = None
-            self.container_client = ContainerClient.from_container_url(connection_string)
+            self.container_client = ContainerClient.from_container_url(
+                connection_string + "/" + container_name
+            )
             print("Read Access only")
 
     def get_storage_client(self) -> BlobServiceClient:
