@@ -18,9 +18,28 @@ import pandas as pd
 
 ```python
 # Global variables
-RAW_DATA = "../data/raw/2020-fpl-data"
-TRANSFORMED_DATA_2020 = "../data/transformed/2020_transformed.csv"
+RAW_DATA_2020 = "../data/transformed/2020_transformed.csv"
 DATA_2020_MASTER = pd.read_csv(RAW_DATA_2020)
+```
+
+```python
+df_elements = DATA_2020_MASTER.fillna(-99)
+```
+
+```python
+df_changes_total = df_elements.groupby(["player_id"]).nunique()
+changes_total = {x: {"mean": y, "count": z} for x,y ,z in list(zip(df_changes_total.columns, df_changes_total.mean().tolist(), df_changes_total.mode().iloc[0].tolist()))}
+```
+
+```python
+df_changes_gw = df_elements.groupby(["player_id", "gameweek"]).nunique()
+changes_gw = {x: {"mean_gw": y, "count_gw": z} for x,y ,z in list(zip(df_changes_gw.columns, df_changes_gw.mean().tolist(), df_changes_gw.mode().iloc[0].tolist()))}
+```
+
+```python
+df = df_elements[df_elements["gameweek"] != 38]
+df_changes_gw = df.groupby(["gameweek", "player_id"]).nunique()
+changes_gw_filtered = {x: {"mean_gw_filtered": y, "count_gw_filtered": z} for x,y ,z in list(zip(df_changes_gw.columns, df_changes_gw.mean().tolist(), df_changes_gw.mode().iloc[0].tolist()))}
 ```
 
 ```python
