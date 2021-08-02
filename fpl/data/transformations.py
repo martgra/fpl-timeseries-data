@@ -214,13 +214,16 @@ def to_csv(data_path="data"):
     elements = []
 
     for data in tqdm(list_data_dir(data_path)):
-        data = load_json(data)
-        add_gw_and_download_time(
-            data["elements"], data["download_time"], get_game_week(data["events"])
-        )
-        add_unique_id(data["elements"])
-        elements.extend(data["elements"])
+        try:
+            data = load_json(data)
+            add_gw_and_download_time(
+                data["elements"], data["download_time"], get_game_week(data["events"])
+            )
+            add_unique_id(data["elements"])
+            elements.extend(data["elements"])
 
         # Add transformations here
+        except TypeError:
+            print(f"Something is wrong in {data}")
 
     return pd.DataFrame(elements)

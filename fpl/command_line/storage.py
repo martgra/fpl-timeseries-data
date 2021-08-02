@@ -47,7 +47,7 @@ def storage(ctx, connection_string, container):
 @click.pass_obj
 def download_bulk(storage_client, data_dir, download_all):
     """Download many blobs to local storage."""
-    data_dir.mkdir(exist_ok=True, parents=True)
+    Path(data_dir).mkdir(exist_ok=True, parents=True)
     if download_all:
         storage_client.download_blobs(download_dir_path=data_dir)
     else:
@@ -79,7 +79,7 @@ def list_storage(storage_client):
     "-d",
     type=click.Path(exists=True),
     help="Path to directory that holds JSON",
-    default=lambda: Path("data", click.get_current_context().parent.params["container"]),
+    default=lambda: Path("data", "raw", click.get_current_context().parent.params["container"]),
 )
 @click.option(
     "--save",

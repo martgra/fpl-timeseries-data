@@ -15,16 +15,9 @@ cd fpl2021
 python3 -m venv venv
 source venv/bin/activate
 # On windows venv\Scripts\activate
-pip install -r requirements
+pip install -r requirements_dev.txt
+pip install -r requirements.txt
 pip install -e .
-touch .env
-```
-
-Add the following to the created `.env` file
-
-```bash
-# .env
-AZURE_STORAGE_CONNECTION_STRING="https://martinfplstats1337.blob.core.windows.net/fplstats"
 ```
 
 ### Dataset
