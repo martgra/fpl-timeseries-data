@@ -35,8 +35,8 @@ Access to the dataset is provided with "read only" access through:
 
 ```python
 # Download all new data from Azure Blob Storage to disk
-# Remember to add connection string to .env file or provide it with the -c flag
-$ fantasy storage download-all -d <PATH_TO_DIR_TO_STORE_DATA>
+$ fantasy storage download-all
+$ fantasy storage --container 2021-fpl-data download-all
 ```
 
 API - Other useful methods
