@@ -3,21 +3,39 @@
 Inspired by the following tutorial:
 https://towardsdatascience.com/fantasy-premier-league-value-analysis-python-tutorial-using-the-fpl-api-8031edfe9910
 
-### Getting started
+
+### **Getting started**
 
 The repo is based in python3 and jupyter with jupytext for agile version control.
 
-#### **Install package**
+#### **Install package just to get data**
 
 ```bash
-git clone https://github.com/martgra/fpl2021.git
-cd fpl2021
-python3 -m venv venv
-source venv/bin/activate
-# On windows venv\Scripts\activate
-pip install -r requirements_dev.txt
-pip install -r requirements.txt
-pip install -e .
+# Install the FPL package
+$ pip install git+https://github.com/martgra/fpl-timeseries-data.git
+
+# Download all new data for season 2020 and 2021
+$ fantasy storage --container 2021-fpl-data download-all
+$ fantasy storage --container 2021-fpl-data download-all
+
+# Extract elements from each JSON and store as CSV 
+$ fantasy storage to-csv --data_dir data/raw/2020-fpl-data --save transformed_2020.csv
+$ fantasy storage to-csv --data_dir data/raw/2021-fpl-data --save transformed_2021.csv
+```
+
+#### **Development**
+```bash
+# Clone Repo
+$ git clone https://github.com/martgra/fpl-timeseries-data.git
+$ cd fpl-timeseries-data.git
+
+# Create virtual environment (optional, recommended)
+$ python3 -m venv venv && source venv/bin/activate
+$ python -m pip install --upgrade pip
+
+# Install development requirements and package. 
+$ pip install -r requirements_dev.txt
+$ pip install -e .
 ```
 
 ### Dataset
@@ -25,19 +43,21 @@ pip install -e .
 The dataset from Fantasy Premier League is accessed by folling this link.
 https://fantasy.premierleague.com/api/bootstrap-static/
 
-As of now the dataset is downloaded every 6th hour (UTC) and stored as as Azure blob "snapshot" with the format
-
-```
-%Y-%m-%dT%H:%M:%SZ_data.json
-```
-
-Access to the dataset is provided with "read only" access through:
+As of now the dataset is downloaded every 6th hour (UTC) and stored as as Azure blob "snapshot".
 
 ```python
-# Download all new data from Azure Blob Storage to disk
-$ fantasy storage download-all
-$ fantasy storage --container 2021-fpl-data download-all
+{
+    "events": [...],
+    "game_settings": {...}, 
+    "teams": [...], 
+    "total_players": int,
+    "element_stats": [...],
+    "element_types": [...],
+    "download_time": timestamp
+}
 ```
+**Description of the data** can be found here: [data_description/data_description.json](data_description/data_description.json).
+
 
 API - Other useful methods
 
