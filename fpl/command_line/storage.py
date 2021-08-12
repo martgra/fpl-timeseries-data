@@ -90,6 +90,6 @@ def list_storage(storage_client):
 )
 def json_to_csv(data_dir, save):
     """Transform all JSON in dir and save as CSV."""
-    csv_data = to_csv(data_dir)
+    csv_data = to_csv(data_path=data_dir)
     Path(save).parent.mkdir(exist_ok=True, parents=True)
     csv_data.to_csv(save)

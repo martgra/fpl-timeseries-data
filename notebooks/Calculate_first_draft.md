@@ -5,9 +5,9 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.11.2
+      jupytext_version: 1.11.4
   kernelspec:
-    display_name: Python 3
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
@@ -122,7 +122,7 @@ def filter_players(df, minutes=50, price_lower=0.0, price_upper=13, attack=True,
 ```
 
 ```python
-old_df = sort_players(data_2020_df, data_2021_df, teams_df, team_difficulty_df, pos=1)
+old_df = sort_players(data_2020_df, data_2021_df, teams_df, team_difficulty_df, pos=2)
 old_df
 filter_players(old_df, minutes=50, price_upper=13, num=10, team=True)
 ```

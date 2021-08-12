@@ -204,24 +204,21 @@ def add_opponents(elements: list, all_teams: list):
     list(map(lambda x: _add_next_five(x, all_teams), elements))
 
 
-def to_csv(data_path="data"):
+def to_csv(entity="elements", data_path="data"):
     """Transform data and save as CSV.
 
     Args:
+        entity (str, optional): Entity to grab from JSON.
         data_path (str, optional): Path to dir holding JSON dumps. Defaults to "data".
-        save_path (str, optional): Path to save transformed CSV. Defaults to "data_transformed.csv".
     """
     elements = []
-
     for data in tqdm(list_data_dir(data_path)):
         try:
             data = load_json(data)
             add_gw_and_download_time(
-                data["elements"], data["download_time"], get_game_week(data["events"])
+                data[entity], data["download_time"], get_game_week(data["events"])
             )
-            add_unique_id(data["elements"])
-            elements.extend(data["elements"])
-
+            elements.extend(data[entity])
         # Add transformations here
         except TypeError:
             print(f"Something is wrong in {data}")
