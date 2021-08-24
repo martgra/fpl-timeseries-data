@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 import click
+from click.types import Choice
 
 from fpl.data.azure_storage import AzureStorage
 from fpl.data.transformations import to_csv
@@ -86,10 +87,23 @@ def list_storage(storage_client):
     "-s",
     type=click.Path(),
     help="Path to save CSV",
+    default="data/transformed/transformed.csv")
+@click.option(
+    "--entity",
+    "-e",
+    type=click.Choice(['elements', 'teams'], case_sensitive=False),
+    help="Entity to make CSV from",
     default="data/transformed/transformed.csv",
 )
-def json_to_csv(data_dir, save):
-    """Transform all JSON in dir and save as CSV."""
-    csv_data = to_csv(data_path=data_dir)
+@click.option(
+    "--fixtures",
+    "-f",
+    type=click.Path(exists=True),
+    help="Path to corresponding fixtures",
+    default="data/raw/2020_fixtures",
+)
+def json_to_csv(data_dir, save, entity, fixtures):
+    """Transform all JSON in dir and save as CSV."""    
+    csv_data = to_csv(entity=entity, data_path=data_dir, fixtures_path=fixtures)
     Path(save).parent.mkdir(exist_ok=True, parents=True)
     csv_data.to_csv(save)

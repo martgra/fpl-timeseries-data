@@ -24,12 +24,12 @@ from tqdm import tqdm
 
 ```python
 elements_2020_df = pd.read_csv("../data/transformed/transformed_2020.csv", index_col=0)
-fixtures_2020 = list_data_dir("../data/2020_fixtures/") 
+fixtures_2020 = list_data_dir("../data/raw/2020_fixtures/") 
 team_data_2020 = "../data/raw/2020-fpl-data/"
 ```
 
 ```python
-teams_df = to_csv("teams", team_data_2020)
+teams_df = to_csv("teams", team_data_2020, fixtures_path="../data/raw/2020_fixtures/")
 ```
 
 ```python
@@ -94,27 +94,19 @@ opponents = teams_df_g.apply(lambda x:  add_opponents(x), axis=1, result_type="e
 ```
 
 ```python
-def add_strength(row):
+def add_strength(row, teams_df):
     if row.iloc[1] == "a":
-        return {"strength": int(teams_df_g[(teams_df_g["name"] == row.iloc[0]) &  (teams_df_g["gameweek"] == row.iloc[2])]["strength_overall_away"])} 
+        return {"strength": int(teams_df[(teams_df["name"] == row.iloc[0]) &  (teams_df["gameweek"] == row.iloc[2])]["strength_overall_home"])} 
     elif row.iloc[1] == "h":
-        return {"strength": int(teams_df_g[(teams_df_g["name"] == row.iloc[0]) &  (teams_df_g["gameweek"] == row.iloc[2])]["strength_overall_home"])} 
+        return {"strength": int(teams_df[(teams_df["name"] == row.iloc[0]) &  (teams_df["gameweek"] == row.iloc[2])]["strength_overall_away"])} 
 
 
 for i in range(5):
-    opponents[f"opponent_strength_{i}"] = opponents.apply(lambda x: add_strength(x[[f"team_{i}", f"venue_{i}", "gameweek"]]), axis=1, result_type="expand")
-```
-
-```python
-opponents
+    opponents[f"opponent_strength_{i}"] = opponents.apply(lambda x: add_strength(x[[f"team_{i}", f"venue_{i}", "gameweek"]], teams_df_g), axis=1, result_type="expand")
 ```
 
 ```python
 opponents = opponents[sorted(opponents.columns, key=lambda x: x.split("_")[-1] if "_" in x else "-1")]
-```
-
-```python
-opponents
 ```
 
 ```python
@@ -134,12 +126,7 @@ elements_2020_df = elements_2020_df[columns]
 ```
 
 ```python
-
-```
-
-```python
 elements_2020_df_g = elements_2020_df.groupby(["code", "gameweek"], as_index=False).last()
-
 ```
 
 ```python
@@ -176,10 +163,6 @@ for code in na_filled.code.unique().tolist():
 ```
 
 ```python
-na_filled.drop([i for i,y in na_filled.nunique().to_dict().items() if y <= 1], axis=1)
-```
-
-```python
 cat_columns = na_filled.select_dtypes(['O']).columns
 na_filled[cat_columns] = na_filled[cat_columns].astype('category')
 cat_columns = na_filled.select_dtypes(['category']).columns
@@ -191,9 +174,38 @@ na_filled = na_filled.drop(["total_points","squad_number", "code", "gameweek", "
 ```
 
 ```python
+ na_filled = na_filled.drop(['cost_change_start',
+ 'cost_change_start_fall',
+ 'event_points',
+ 'in_dreamteam',
+ 'selected_by_percent',
+ 'team',
+ 'team_code',
+ 'transfers_in',
+ 'transfers_out',
+ 'own_goals',
+ 'penalties_missed',
+ 'red_cards',
+ 'bonus',
+ 'influence_rank',
+ 'creativity_rank',
+ 'threat_rank',
+ 'ict_index_rank',
+ 'corners_and_indirect_freekicks_order',
+ 'direct_freekicks_order',
+ 'strength_overall_home',
+ 'strength_overall_away',
+ 'venue_0',
+ 'venue_1',
+ 'venue_2',
+ 'venue_3',
+ 'venue_4'], axis=1)
+```
+
+```python
 na_filled_backup = na_filled
-na_filled = na_filled.loc[na_filled.target != 0]
-na_filled
+#na_filled = na_filled.loc[na_filled.target != 0]
+na_filled_backup
 ```
 
 ```python
@@ -281,7 +293,7 @@ r2_score(y_test, score_x)
 ```python
 importance = pd.DataFrame([best_random.feature_importances_]) 
 importance.columns=na_filled.columns.tolist()[:-1]
-importance["points_per_game"]
+
 ```
 
 ```python
@@ -291,7 +303,200 @@ importance.idxmax(axis=1)
 
 ```python
 pd.set_option("display.max_columns", None)
-importance.sort_values(by=[0], axis=1, ascending=True)
+importance.sort_values(by=[0], axis=1, ascending=False)
+```
+
+# Predict 2021 players
+
+```python
+import pandas as pd
+elements_2021_df = pd.read_csv("../data/transformed/transformed_2021.csv", index_col=0)
+```
+
+```python
+elements_2021_df = elements_2021_df.groupby("code", as_index=False).last()
+```
+
+```python
+last_5 = pd.read_csv("../data/transformed/transformed_2020.csv", index_col=0)
+```
+
+```python
+last_5 = last_5.groupby(["code", "gameweek"], as_index=False).last()
+last_5 = last_5.loc[last_5["gameweek"] > 38-5]
+```
+
+```python
+for code in last_5.code.unique().tolist():
+    for column in ["bonus", "bps", "ict_index", "clean_sheets", "creativity", "goals_conceded", "goals_scored", "influence", "minutes",
+                   "own_goals", "penalties_saved", "red_cards", "saves", "threat", "yellow_cards"]:
+        try:
+            index = last_5.loc[last_5.code == code, column]
+            index = index.diff().fillna(index)
+            last_5.loc[last_5.code == code, column] = index
+        except Exception as e:
+            pass
+```
+
+```python
+last_5 = last_5.loc[last_5["gameweek"] > 38-4]
+last_5.loc[last_5.minutes > 90, "minutes"] = last_5.loc[last_5.minutes > 90, "minutes"]/2
+last_5["gameweek"] = last_5["gameweek"] - 38 
+last_5 = last_5.append(elements_2021_df)
+last_5 = last_5.sort_values(by=["code", "gameweek"], ignore_index=True)
+last_5 = last_5.loc[last_5.code.isin(elements_2021_df.code.unique())]
+
+```
+
+```python
+for code in last_5.code.unique().tolist():
+    for column in ["bonus", "bps", "ict_index", "clean_sheets", "creativity", "goals_conceded", "goals_scored", "influence", "minutes",
+                   "own_goals", "penalties_saved", "red_cards", "saves", "threat", "yellow_cards"]:
+        try:
+            index = last_5.loc[last_5.code == code, column]
+
+            last_5.loc[last_5.code == code, column] = index.mean()
+        except Exception as e:
+            pass
+```
+
+```python
+last = last_5.groupby("code").last()
+```
+
+```python
+merged_g = last
+```
+
+```python
+teams_21_df = to_csv("teams", "../data/raw/2021-fpl-data/")
+```
+
+```python
+teams_21_df_g = teams_21_df.loc[teams_21_df["gameweek"] < 38].groupby(["name"], as_index=False).last()
+```
+
+```python
+teams = {i: y for i,y in zip(teams_21_df_g["id"].unique().tolist(),teams_21_df_g["name"].unique().tolist())}
+fixtures_2021 = list_data_dir("../data/2021_fixtures/") 
+```
+
+```python
+gameweek_fixtures = []
+for path in fixtures_2021[-1:]:
+    with open(path) as file:
+        fixtures = json.load(file)["fixtures"]
+    all_teams = {}
+    for team in teams:
+        opponents = []
+        for fixture in fixtures:
+            if fixture["team_h"] == team:
+                opponents.append(
+                        {
+                            "team": teams[fixture["team_a"]],
+                            "difficulty": fixture["team_h_difficulty"],
+                            "venue": "h",
+                            "gameweek": fixture["event"],
+                        }
+                    )
+            if fixture["team_a"] == team:
+                opponents.append(
+                        {
+                            "team": teams[fixture["team_h"]],
+                            "difficulty": fixture["team_a_difficulty"],
+                            "venue": "a",
+                            "gameweek": fixture["event"],
+                        }
+                    )
+        all_teams[teams[team]] = opponents
+    gameweek_fixtures.append(all_teams)
+```
+
+```python
+opponents = teams_21_df_g.apply(lambda x:  add_opponents(x), axis=1, result_type="expand")
+```
+
+```python
+for i in range(5):
+    opponents[f"opponent_strength_{i}"] = opponents.apply(lambda x: add_strength(x[[f"team_{i}", f"venue_{i}", "gameweek"]], teams_21_df_g), axis=1, result_type="expand")
+opponents = opponents[sorted(opponents.columns, key=lambda x: x.split("_")[-1] if "_" in x else "-1")]
+```
+
+```python
+teams_21_df_g = teams_21_df_g.join(opponents.set_index(["name", "gameweek"]), on=["name", "gameweek"])
+```
+
+```python
+elements_2021_df_merged = merged_g.join(teams_21_df_g.set_index(["id", "gameweek"]), on=["team", "gameweek"], rsuffix="_team")
+```
+
+```python
+pd.set_option("display.max_columns", None)
+elements_2021_df_merged
+```
+
+```python
+drop_text = [i for i,y in elements_2021_df.dtypes.to_dict().items() if ((y == "O" or "text" in i) and "venue" not in i)]
+codes = elements_2021_df_merged["code"]
+elements_2021_df_merged = elements_2021_df_merged.drop(drop_text, axis=1)
+elements_2021_df_merged =elements_2021_df_merged.drop([i for i in elements_2021_df_merged.columns.tolist() if not i in na_filled_backup.columns.tolist()], axis=1)
+```
+
+```python
+cat_columns = elements_2021_df_merged.select_dtypes(['O']).columns
+elements_2021_df_merged[cat_columns] = elements_2021_df_merged[cat_columns].astype('category')
+cat_columns = elements_2021_df_merged.select_dtypes(['category']).columns
+elements_2021_df_merged[cat_columns] = elements_2021_df_merged[cat_columns].apply(lambda x: x.cat.codes)
+```
+
+```python
+elements_2021_df_merged["chance_of_playing_next_round"] = elements_2021_df_merged["chance_of_playing_next_round"].fillna(100)
+elements_2021_df_merged["chance_of_playing_this_round"] = elements_2021_df_merged["chance_of_playing_this_round"].fillna(100)
+```
+
+```python
+elements_2021_df_merged.interpolate(method='linear', limit_direction='forward', axis=0)
+elements_2021_df_merged = elements_2021_df_merged.fillna(100)
+
+```
+
+```python
+elements_2021_df_merged.columns.tolist()
+```
+
+```python
+elements_2021_df_merged_scaled = scaler.transform(elements_2021_df_merged)
+```
+
+```python
+results = pd.DataFrame()
+results["pred"] = codes
+```
+
+```python
+results["pred"] = best_random.predict(elements_2021_df_merged_scaled)
+```
+
+```python
+elements_2021_df = pd.read_csv("../data/transformed/transformed.csv", index_col=0)
+elements_2021_df = elements_2021_df.groupby(["code"]).last()
+results_selected = results.join(elements_2021_df, on=["code"])[["web_name", "pred", "now_cost", "element_type"]]
+```
+
+```python
+results_selected[(results_selected.element_type == 3) & (results_selected.now_cost <= 130) & (results_selected.now_cost >= 40)].sort_values(by=["pred", "now_cost"], ascending=[False, True]).iloc[:40]
+```
+
+```python
+results_selected[results_selected.web_name == "Mount"]
+```
+
+```python
+for i in elements_2021_df_merged.describe():
+    print(i)
+    print(elements_2021_df_merged.describe()[i].iloc[1:].loc[["mean", "std", "min", "max"]].to_dict())
+    print(na_filled_backup.describe()[i].iloc[1:].loc[["mean", "std", "min", "max"]].to_dict())
+    input("Press Enter to continue...")
 ```
 
 ```python

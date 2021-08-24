@@ -2,7 +2,7 @@
 import hashlib
 
 import pandas as pd
-import requests
+from datetime import datetime, timedelta
 from tqdm import tqdm
 
 from fpl.data.io import list_data_dir, load_json
@@ -69,142 +69,49 @@ def add_team_name(elements: list, teams: list):
     list(map(lambda x: x.update({"team_name": teams[x["team"]]}), elements))
 
 
-def create_opponents(
-    teams_data: list, fixtures_uri="https://fantasy.premierleague.com/api/fixtures/", sort=False
-) -> dict:
+def create_opponents(fixtures: dict, sort=False) -> dict:
     """Return the fixtures list for each PL team.
 
     Args:
-        teams_data (list): List holding teams data loaded from /api/boostrap-static dump
-        fixtures_uri (str, optional): Path the FPL fixtures list.
-            Defaults to "https://fantasy.premierleague.com/api/fixtures/".
+        fixtures (dict, optional): fixtures
         sort (boolean, optional): Sort opponents on gameweek. Defaults to False.
 
     Returns:
-        dict: {team_name: [{team: str, difficulty: int, venue: str}]}
+        dict: {team_id: [{team_id: int, difficulty: int, venue: str}]}
     """
-    url = fixtures_uri
-    fpl_json = requests.get(url).json()
-    name_mapping = {i["id"]: i["name"] for i in teams_data}
-    teams = set([i["team_a"] for i in fpl_json])
     all_teams = {}
-    for y in teams:
+    for team_id in range(1,21):
         opponents = []
-        for i in fpl_json:
-            if i["team_h"] == y:
+        for event in fixtures["fixtures"]:
+            if event["team_h"] == team_id:
                 opponents.append(
                     {
-                        "team": name_mapping[i["team_a"]],
-                        "difficulty": i["team_h_difficulty"],
+                        "team_id": event["team_a"],
+                        "difficulty": event["team_h_difficulty"],
                         "venue": "h",
-                        "gameweek": i["event"],
+                        "gameweek": event["event"],
                     }
                 )
-            if i["team_a"] == y:
+            if event["team_a"] == team_id:
                 opponents.append(
                     {
-                        "team": name_mapping[i["team_h"]],
-                        "difficulty": i["team_a_difficulty"],
+                        "team_id": event["team_h"],
+                        "difficulty": event["team_a_difficulty"],
                         "venue": "a",
-                        "gameweek": i["event"],
+                        "gameweek": event["event"],
                     }
                 )
 
         if sort:
-            all_teams[name_mapping[y]] = sorted(
+            all_teams[team_id] = sorted(
                 opponents, key=lambda i: i["gameweek"] if i["gameweek"] else 99999
             )
         else:
-            all_teams[name_mapping[y]] = opponents
-
+            all_teams[team_id] = opponents
     return all_teams
 
 
-def get_team_opponents(all_teams: list, team_name: str, from_gameweek=1, number_fixtures=37):
-    """Return fixtures data for a specific team.
-
-    Args:
-        all_teams (list): All teams fixtures list.
-        team_name (str): The name of team to return fixtures on
-        from_gameweek (int, optional): Fixtures from gameweek. Defaults to 1.
-        number_fixtures (int, optional): Number of fixtures to return. Defaults to 37.
-
-    Example:
-        all_teams = create_opponents(
-        data["teams"], fixtures_uri="https://fantasy.premierleague.com/api/fixtures/")
-        fixtures = get_team_opponents(all_teams, "Man City", 1, 5)
-
-    Returns:
-        dict: {
-        "opponents": list,
-        "in_gameweeks": dict,
-        "postponed": boolen,
-        "has_double_gw": boolean,
-    }
-    """
-    team_fixtures = all_teams[team_name][from_gameweek : from_gameweek + number_fixtures]
-    if from_gameweek + number_fixtures > len(all_teams[team_name]):
-        number_fixtures = len(all_teams[team_name]) - from_gameweek
-
-    gameweeks = [i["gameweek"] for i in team_fixtures]
-    gameweeks = {
-        i: gameweeks.count(i)
-        for i in range(from_gameweek + 1, from_gameweek + number_fixtures + 1, 1)
-    }
-    return {
-        "opponents": team_fixtures,
-        "in_gameweeks": gameweeks,
-        "postponed": bool([i for i in gameweeks if gameweeks[i] < 1]),
-        "has_double_gw": bool([i for i in gameweeks if gameweeks[i] > 1]),
-    }
-
-
-def _add_next_five(element: dict, all_teams: list):
-    """Add next 5 fixtures to an element.
-
-    Args:
-        element (dict): Player element from /bootstrap-static
-        all_teams (list): All teams element from /boostrap-static
-    """
-    data = get_team_opponents(all_teams, element["team_name"], element["gameweek"], 5)
-    opponents_extracted = {}
-    for i, y in enumerate(data["opponents"]):
-        if y["gameweek"]:
-            opponents_extracted.update(
-                {
-                    "n+{}_opponent".format(i): y["team"],
-                    "n+{}_difficulty".format(i): y["difficulty"],
-                    "n+{}_venue".format(i): y["venue"],
-                    "n+{}_gw".format(i): y["gameweek"],
-                }
-            )
-        else:
-            opponents_extracted.update(
-                {
-                    "n+{}_opponent".format(i): None,
-                    "n+{}_difficulty".format(i): None,
-                    "n+{}_venue".format(i): None,
-                    "n+{}_gw".format(i): element["gameweek"] + 1 + i,
-                }
-            )
-
-    element.update(opponents_extracted)
-    del data["opponents"]
-    del data["in_gameweeks"]
-    element.update(data)
-
-
-def add_opponents(elements: list, all_teams: list):
-    """Update all elements with fixtures.
-
-    Args:
-        elements (list): List holding elements
-        all_teams (list): List holding teams
-    """
-    list(map(lambda x: _add_next_five(x, all_teams), elements))
-
-
-def to_csv(entity="elements", data_path="data"):
+def to_csv(entity="teams", data_path="data/raw/2021-fpl-data", fixtures_path="data/raw/2021_fixtures/"):
     """Transform data and save as CSV.
 
     Args:
@@ -212,15 +119,65 @@ def to_csv(entity="elements", data_path="data"):
         data_path (str, optional): Path to dir holding JSON dumps. Defaults to "data".
     """
     elements = []
+    fixtures_list = list_data_dir(fixtures_path)
+
     for data in tqdm(list_data_dir(data_path)):
         try:
             data = load_json(data)
             add_gw_and_download_time(
                 data[entity], data["download_time"], get_game_week(data["events"])
             )
+            
+            
+            if entity == "teams":
+           
+                fixtures = load_json(_nearest(fixtures_list, data["download_time"]))
+                all_fixtures_list = create_opponents(fixtures)
+                list(map(lambda x: _add_next_opponents(x, data[entity], all_fixtures_list) , data["teams"]))
+            
             elements.extend(data[entity])
         # Add transformations here
         except TypeError:
             print(f"Something is wrong in {data}")
 
     return pd.DataFrame(elements)
+
+
+def _nearest(items, pivot):
+    if isinstance(items[0], str):
+        items = [(datetime.strptime(i, "%Y-%m-%d %H:%M:%S.%f"),i) for i in items]
+    else:
+        items = [(datetime.strptime(i.name.split(".")[0].split("_")[0], "%Y-%m-%dT%H-%M-%SZ"),i) for i in items]  
+    if isinstance(pivot,str):
+        pivot = datetime.strptime(pivot, "%Y-%m-%d %H:%M:%S.%f")
+        
+    return min(items, key=lambda x : abs(x[0] - pivot) if (x[0] <= pivot) else timedelta(days=100000))[1]
+
+def _elaborate_opponent(opponent, teams_data, num):
+    opponent_data = teams_data[opponent["team_id"]]
+    return {
+        f"opponent_{num}_name": opponent_data["name"],
+        f"opponent_{num}_venue": opponent["venue"],
+        f"opponent_{num}_strengh_attack": opponent_data["strength_attack_home"] if opponent[f"venue"] == "h" else opponent_data["strength_attack_away"],
+        f"opponent_{num}_strengh_defence": opponent_data["strength_defence_home"] if opponent[f"venue"] == "h" else opponent_data["strength_defence_away"],
+        # Have to check for NaN by comparing NaN == NaN returns False. 
+        f"opponent_{num}_played_in_gw": int(opponent["gameweek"]) if isinstance(opponent["gameweek"], (int, float)) and opponent["gameweek"] == opponent["gameweek"] else -1 
+    }
+
+
+def _add_next_opponents(team, teams: dict, all_fixtures: list, num_opponents=5):
+    """Add next 5 fixtures to an element.
+
+    Args:
+        element (dict): Player element from /bootstrap-static
+        all_teams (list): All teams element from /boostrap-static
+    """
+    if not isinstance(teams, dict):  
+        teams = {i["id"]: i for i in teams}
+        
+    for num, opponent in enumerate(all_fixtures[team["id"]][team["gameweek"]:team["gameweek"]+5]):
+        team.update(_elaborate_opponent(opponent, teams, num))
+
+
+if __name__ == "__main__":
+    to_csv(data_path="/home/vagrant/dev/fpl2021/data/raw/2021-fpl-data", fixtures_path="/home/vagrant/dev/fpl2021/data/raw/2021-fpl-fixtures")
