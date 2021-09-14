@@ -8,16 +8,19 @@
         "elements": {
             "type": "object",
             "patternProperties": {
-            ".+": { "$ref": "#/definitions/element_property" }
+                ".+": {
+                    "$ref": "#/definitions/element_property"
+                }
+            }
+        },
+        "teams": {
+            "type": "object",
+            "patternProperties": {
+                ".+": {
+                    "$ref": "#/definitions/element_property"
+                }
+            }
         }
-    },
-    "teams": {
-        "type": "object",
-        "patternProperties": {
-        ".+": { "$ref": "#/definitions/element_property" }
-    }
-}
-
     },
     "definitions": {
         "element_property": {
@@ -26,18 +29,43 @@
                 "change": {
                     "description": "When data is updated",
                     "type": "string",
-                    "enum": ["gw", "continuous", "season", "static","None"]
+                    "enum": [
+                        "gw",
+                        "continuous",
+                        "season",
+                        "static",
+                        "None"
+                    ]
                 },
                 "description": {
                     "description": "Short description of what the data means",
                     "type": "string"
+                },
+                "feature_engineering": {
+                    "type": "object",
+                    "properties": {
+                        "action": {
+                            "description": "How to handle feature",
+                            "type": "string",
+                            "enum": [
+                                "keep",
+                                "drop",
+                                "engineer",
+                                "None"
+                            ]
+                        },
+                        "feature_notes": {
+                            "type": "string",
+                            "description": "Notes related to feature handling"
+                        }
+                    }
                 },
                 "notes": {
                     "description": "Extensive explanation of interpertation of data",
                     "type": "object",
                     "properties": {
                         "personal_notes": {
-                            "type":"string",
+                            "type": "string",
                             "description": "Personal notes regarding data"
                         },
                         "official_explanation": {
@@ -48,23 +76,45 @@
                             "description": "url",
                             "format": "uri"
                         }
-
                     }
                 },
                 "data_type": {
                     "description": "Type of the data",
                     "type": "string",
-                    "enum": ["string", "integer", "float", "boolean", "date_time", "None"]
+                    "enum": [
+                        "string",
+                        "integer",
+                        "float",
+                        "boolean",
+                        "date_time",
+                        "None"
+                    ]
                 },
                 "type": {
                     "description": "What is measured",
                     "type": "string",
-                    "enum": ["continuous", "discrete", "categorical", "descriptive", "None"]
+                    "enum": [
+                        "continuous",
+                        "discrete",
+                        "categorical",
+                        "descriptive",
+                        "None"
+                    ]
                 },
                 "calculated": {
                     "description": "How data is measured",
                     "type": "string",
-                    "enum": ["snapshot", "cumulative_sum", "static", "rank", "moving average", "average", "percentage", "fraction", "None"]
+                    "enum": [
+                        "snapshot",
+                        "cumulative_sum",
+                        "static",
+                        "rank",
+                        "moving average",
+                        "average",
+                        "percentage",
+                        "fraction",
+                        "None"
+                    ]
                 }
             }
         }

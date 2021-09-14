@@ -209,14 +209,25 @@ na_filled_backup
 ```
 
 ```python
+!pip install scikit-learn
 from sklearn.metrics import r2_score
 
 r2_score(na_filled.target, na_filled.points_per_game)
 ```
 
 ```python
+X_train = na_filled.iloc[:20000,:-1]
+X_test = na_filled.iloc[20000:,:-1]
+
+y_train = na_filled.iloc[:20000,-1]
+y_test = na_filled.iloc[20000:,-1]
+```
+
+```python
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(na_filled.iloc[:,:-1], na_filled.iloc[:,-1], test_size=0.33, random_state=42)
+#X_train, X_test, y_train, y_test = train_test_split(na_filled.iloc[:,:-1], na_filled.iloc[:,-1], test_size=0.33, random_state=42)
+
+
 
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
@@ -278,7 +289,8 @@ rf_random.fit(X_train, y_train)
 ```
 
 ```python
-best_random = rf_random.best_estimator_
+#best_random = rf_random.best_estimator_
+best_random = regr
 best_random.score(X_test, y_test)
 ```
 
